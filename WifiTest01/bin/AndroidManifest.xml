@@ -56,6 +56,9 @@
         <activity
             android:name="com.yinghe.wifitest.client.activity.CityChooseActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.yinghe.wifitest.client.activity.AddEquipmentActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <service
             android:name="com.baidu.location.f"

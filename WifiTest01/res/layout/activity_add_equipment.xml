@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relative_scan_crop"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+    </RelativeLayout>
+
+    <com.yinghe.wifitest.client.view.ScanView
+        android:id="@+id/scanView1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/relative_scan_crop"
+        android:layout_below="@+id/relative_scan_crop"
+        android:layout_marginTop="22dp"
+        android:background="@color/blue" />
+
+</RelativeLayout>

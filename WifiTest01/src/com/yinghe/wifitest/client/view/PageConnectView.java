@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.wifitest01.R;
+import com.yinghe.wifitest.client.activity.AddEquipmentActivity;
 import com.yinghe.wifitest.client.activity.CityChooseActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
 import com.yinghe.wifitest.client.entity.HotCityInfo;
@@ -69,9 +70,8 @@ public class PageConnectView {
 	}
 
 	protected static void addEquipment() {
-		System.out.println("OK");
-		WifiUtil.init(mActivity);
 
+		mActivity.startActivity(new Intent(mActivity, AddEquipmentActivity.class));
 	}
 
 	private static void initWeatherInfo(final Activity activity, View view) {
@@ -101,7 +101,8 @@ public class PageConnectView {
 
 			@Override
 			public void onClick(View arg0) {
-				activity.startActivityForResult(new Intent(activity, CityChooseActivity.class), MsgTag.Request_GetWeather);
+				activity.startActivityForResult(new Intent(activity, CityChooseActivity.class),
+						MsgTag.Request_GetWeather);
 			}
 		});
 
@@ -115,7 +116,8 @@ public class PageConnectView {
 		text_tem_now.setText(WeatherInfo.Instance().getTem_Now());
 
 		String imgName = "ww" + WeatherInfo.Instance().getImg_Weather();
-		img_Weather.setImageResource(mActivity.getResources().getIdentifier(imgName, "drawable", mActivity.getPackageName()));
+		img_Weather.setImageResource(
+				mActivity.getResources().getIdentifier(imgName, "drawable", mActivity.getPackageName()));
 	}
 
 	static Handler handler = new Handler() {

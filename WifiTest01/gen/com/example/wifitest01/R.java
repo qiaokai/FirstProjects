@@ -386,6 +386,13 @@ public final class R {
         /**  浅黄色 
          */
         public static final int sandybrown=0x7f040029;
+        public static final int scanview_frame=0x7f040094;
+        public static final int scanview_laser=0x7f040095;
+        /**  黑色 
+         */
+        public static final int scanview_mask=0x7f040092;
+        public static final int scanview_result=0x7f040093;
+        public static final int scanview_result_points=0x7f040096;
         /**  米绸色 
          */
         public static final int seaShell=0x7f040008;
@@ -536,60 +543,63 @@ public final class R {
         public static final int ww9=0x7f02004e;
     }
     public static final class id {
-        public static final int Text_enter_scenes=0x7f080018;
-        public static final int TitleTable=0x7f080009;
-        public static final int btn_enterGame=0x7f080013;
-        public static final int editText_Location=0x7f080001;
-        public static final int gridView_hotCity=0x7f080006;
-        public static final int imageView_Location=0x7f080021;
-        public static final int imageView_add_equipment=0x7f080017;
-        public static final int imageView_split=0x7f08001b;
-        public static final int imageView_weather=0x7f080020;
-        public static final int image_Title_connect=0x7f08000b;
-        public static final int image_Title_find=0x7f08000d;
-        public static final int image_Title_user=0x7f08000f;
-        public static final int image_search=0x7f080002;
-        public static final int img_Equipment_ctrl=0x7f080026;
-        public static final int img_Equipment_state=0x7f080027;
-        public static final int item_citylist_text=0x7f080025;
-        public static final int list_CityList=0x7f080008;
-        public static final int list_Equipment=0x7f080023;
-        public static final int ll=0x7f080012;
-        public static final int margin_cityChoose_center=0x7f080003;
-        public static final int margin_cityChoose_top=0x7f080000;
-        public static final int myListView1=0x7f080015;
-        public static final int panel_CityList=0x7f080007;
-        public static final int panel_hotCity=0x7f080004;
-        public static final int relativeLayout1=0x7f080016;
-        public static final int text=0x7f08001f;
-        public static final int textMagin=0x7f080019;
-        public static final int textView1=0x7f080014;
-        public static final int text_Equipment_state=0x7f080028;
-        public static final int text_Title_connect=0x7f08000c;
-        public static final int text_Title_find=0x7f08000e;
-        public static final int text_Title_user=0x7f080010;
-        public static final int text_Weather=0x7f08001e;
-        public static final int text_city=0x7f08001a;
-        public static final int text_hotCity=0x7f080005;
-        public static final int text_item_grid_hotCity=0x7f080024;
-        public static final int text_tem_high=0x7f080022;
-        public static final int text_tem_low=0x7f08001d;
-        public static final int text_temperature_current=0x7f08001c;
-        public static final int vp_fra=0x7f08000a;
-        public static final int vp_guide=0x7f080011;
+        public static final int Text_enter_scenes=0x7f08001a;
+        public static final int TitleTable=0x7f08000b;
+        public static final int btn_enterGame=0x7f080015;
+        public static final int editText_Location=0x7f080003;
+        public static final int gridView_hotCity=0x7f080008;
+        public static final int imageView_Location=0x7f080023;
+        public static final int imageView_add_equipment=0x7f080019;
+        public static final int imageView_split=0x7f08001d;
+        public static final int imageView_weather=0x7f080022;
+        public static final int image_Title_connect=0x7f08000d;
+        public static final int image_Title_find=0x7f08000f;
+        public static final int image_Title_user=0x7f080011;
+        public static final int image_search=0x7f080004;
+        public static final int img_Equipment_ctrl=0x7f080028;
+        public static final int img_Equipment_state=0x7f080029;
+        public static final int item_citylist_text=0x7f080027;
+        public static final int list_CityList=0x7f08000a;
+        public static final int list_Equipment=0x7f080025;
+        public static final int ll=0x7f080014;
+        public static final int margin_cityChoose_center=0x7f080005;
+        public static final int margin_cityChoose_top=0x7f080002;
+        public static final int myListView1=0x7f080017;
+        public static final int panel_CityList=0x7f080009;
+        public static final int panel_hotCity=0x7f080006;
+        public static final int relativeLayout1=0x7f080018;
+        public static final int relative_scan_crop=0x7f080000;
+        public static final int scanView1=0x7f080001;
+        public static final int text=0x7f080021;
+        public static final int textMagin=0x7f08001b;
+        public static final int textView1=0x7f080016;
+        public static final int text_Equipment_state=0x7f08002a;
+        public static final int text_Title_connect=0x7f08000e;
+        public static final int text_Title_find=0x7f080010;
+        public static final int text_Title_user=0x7f080012;
+        public static final int text_Weather=0x7f080020;
+        public static final int text_city=0x7f08001c;
+        public static final int text_hotCity=0x7f080007;
+        public static final int text_item_grid_hotCity=0x7f080026;
+        public static final int text_tem_high=0x7f080024;
+        public static final int text_tem_low=0x7f08001f;
+        public static final int text_temperature_current=0x7f08001e;
+        public static final int vp_fra=0x7f08000c;
+        public static final int vp_guide=0x7f080013;
     }
     public static final class layout {
-        public static final int activity_citychoose=0x7f030000;
-        public static final int activity_fragment=0x7f030001;
-        public static final int activity_guide=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_main2=0x7f030004;
-        public static final int activity_main3=0x7f030005;
-        public static final int activity_splash=0x7f030006;
-        public static final int fragment_connect=0x7f030007;
-        public static final int item_gridview_hotcity=0x7f030008;
-        public static final int item_listview_citylist=0x7f030009;
-        public static final int item_listview_equipment=0x7f03000a;
+        public static final int activity_add_equipment=0x7f030000;
+        public static final int activity_citychoose=0x7f030001;
+        public static final int activity_fragment=0x7f030002;
+        public static final int activity_guide=0x7f030003;
+        public static final int activity_main=0x7f030004;
+        public static final int activity_main2=0x7f030005;
+        public static final int activity_main3=0x7f030006;
+        public static final int activity_splash=0x7f030007;
+        public static final int fragment_connect=0x7f030008;
+        public static final int item_gridview_hotcity=0x7f030009;
+        public static final int item_listview_citylist=0x7f03000a;
+        public static final int item_listview_equipment=0x7f03000b;
     }
     public static final class string {
         public static final int app_name=0x7f060000;

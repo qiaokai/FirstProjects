@@ -147,5 +147,10 @@
     <color name="darkblue">#00008b</color> <!-- 暗蓝色 -->
     <color name="navy">#000080</color> <!-- 海军色 -->
     <color name="black">#000000</color> <!-- 黑色 -->
+    <color name="scanview_mask">#60000000</color>
+    <color name="scanview_result">#b0000000</color>
+    <color name="scanview_frame">#ff000000</color>
+    <color name="scanview_laser">#ffff0000</color>
+    <color name="scanview_result_points">#c0ffff00</color>
 
 </resources>
