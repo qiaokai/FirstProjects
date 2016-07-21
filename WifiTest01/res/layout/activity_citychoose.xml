@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_city_choose"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/margin_cityChoose_top"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp" >
+
+            <EditText
+                android:id="@+id/editText_Location"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/image_search"
+                android:background="@drawable/editext_location"
+                android:hint="搜索全球城市"
+                android:textSize="18sp" >
+            </EditText>
+
+            <ImageView
+                android:id="@+id/image_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/editText_Location"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/editText_Location"
+                android:background="@drawable/button_search"
+                android:src="@drawable/img_search" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/margin_cityChoose_center"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/panel_hotCity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/text_hotCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:text="热门城市"
+                android:textColor="@color/dimgrey"
+                android:textSize="16sp" />
+
+            <GridView
+                android:id="@+id/gridView_hotCity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/text_hotCity"
+                android:layout_centerHorizontal="true"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="3" >
+            </GridView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/panel_CityList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ListView
+                android:id="@+id/list_CityList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:divider="@android:color/transparent"
+                android:listSelector="@android:color/transparent" >
+            </ListView>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

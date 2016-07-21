@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">WifiTest</string>
+    <string name="enterGame">立即体验</string>
+    <string name="smallConnect">微联</string>
+    <string name="find">发现</string>
+    <string name="user">我的</string>
+    <string name="closed">关闭中</string>
+    <string name="opened">已开启</string>
+
+</resources>

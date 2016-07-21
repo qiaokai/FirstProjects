@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/img_equipment_state_clossed" android:state_enabled="false"/>
+    <item android:drawable="@drawable/img_equipment_state_opened" android:state_enabled="true"/>
+
+</selector>
