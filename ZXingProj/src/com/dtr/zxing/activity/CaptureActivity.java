@@ -94,12 +94,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		inactivityTimer = new InactivityTimer(this);
 		beepManager = new BeepManager(this);
 
-//		TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-//				0.9f);
-//		animation.setDuration(4500);
-//		animation.setRepeatCount(-1);
-//		animation.setRepeatMode(Animation.RESTART);
-//		scanLine.startAnimation(animation);
+		TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+			0.9f);
+		animation.setDuration(4500);
+		animation.setRepeatCount(-1);
+		animation.setRepeatMode(Animation.RESTART);
+		scanLine.startAnimation(animation);
 	}
 
 	@Override
