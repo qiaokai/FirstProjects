@@ -32,6 +32,7 @@ public final class ScanView extends View {
 	private int frameColor;
 	private int laserColor;
 	private int resultPointColor;
+	private boolean isFirst = true;
 
 	public ScanView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -47,7 +48,6 @@ public final class ScanView extends View {
 	public void onDraw(Canvas canvas) {
 		Rect frame = CameraManager.Instance().getFramingRect();
 		if (frame == null) {
-			System.out.println("OKOKOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 			return;
 		}
 		//获取屏幕的宽和高
@@ -76,6 +76,11 @@ public final class ScanView extends View {
 		canvas.drawRect(frame.right - CORNER_WIDTH, frame.bottom - ScreenRate, frame.right, frame.bottom, paint);
 
 		// 绘制中间的线,每次刷新界面，中间的线往下移动SPEEN_DISTANCE
+
+		if (isFirst) {
+			slideTop = frame.top;
+			isFirst = false;
+		}
 		slideTop += SPEEN_DISTANCE;
 		if (slideTop >= frame.bottom) {
 			slideTop = frame.top;
