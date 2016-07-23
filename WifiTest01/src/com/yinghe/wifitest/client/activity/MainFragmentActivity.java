@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainFragmentActivity extends Activity implements View.OnClickListener {
 
@@ -165,8 +166,9 @@ public class MainFragmentActivity extends Activity implements View.OnClickListen
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == MsgTag.Request_GetWeather && resultCode == MsgTag.Result_GetWeatherSuccess) {
-			System.out.println("000");
 			PageConnectView.updateWeatherPanel();
+		} else if (requestCode == MsgTag.Msg_GetScanInfoSuccess) {
+			Toast.makeText(getApplicationContext(), "huoqu xinxi OK ", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

@@ -7,7 +7,6 @@ import java.net.URLConnection;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.text.TextUtils;
 
@@ -18,9 +17,9 @@ import com.yinghe.wifitest.client.entity.WeatherInfo;
 public class WeatherUtil {
 	private static final String SERVICES_HOST = "http://flash.weather.com.cn/wmaps/xml/";
 
-	public static void upDateWeatherInfo(Activity activity, Handler handler) {
+	public static void upDateWeatherInfo(Handler handler) {
 		String city = LocationInfo.Instance().getCity();
-		String cityName = LanguageUtil.getPinyin(activity, city);
+		String cityName = LanguageUtil.getPinyin(city);
 
 		if ("重庆".equals(city)) {
 			cityName = "chongqing";
@@ -35,7 +34,7 @@ public class WeatherUtil {
 
 			@Override
 			public void run() {
-				InputStream inputStream=null;
+				InputStream inputStream = null;
 
 				try {
 					System.out.println(SERVICES_HOST + cityName + ".xml");

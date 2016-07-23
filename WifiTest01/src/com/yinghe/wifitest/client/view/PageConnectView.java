@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.wifitest01.R;
-import com.yinghe.wifitest.client.activity.AddEquipmentActivity;
+import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.activity.CityChooseActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
 import com.yinghe.wifitest.client.entity.HotCityInfo;
@@ -21,7 +21,6 @@ import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.entity.WeatherInfo;
 import com.yinghe.wifitest.client.utils.LocationUtil;
 import com.yinghe.wifitest.client.utils.WeatherUtil;
-import com.yinghe.wifitest.client.utils.WifiUtil;
 
 public class PageConnectView {
 	private static Activity mActivity;
@@ -70,8 +69,8 @@ public class PageConnectView {
 	}
 
 	protected static void addEquipment() {
+		mActivity.startActivityForResult(new Intent(mActivity, ScanActivity.class), MsgTag.Msg_GetScanInfoSuccess);
 
-		mActivity.startActivity(new Intent(mActivity, AddEquipmentActivity.class));
 	}
 
 	private static void initWeatherInfo(final Activity activity, View view) {
@@ -86,7 +85,7 @@ public class PageConnectView {
 		if (TextUtils.isEmpty(LocationInfo.Instance().getCity())) {
 			LocationUtil.getLocationCity(activity, handler);
 		} else {
-			WeatherUtil.upDateWeatherInfo(activity, handler);
+			WeatherUtil.upDateWeatherInfo(handler);
 		}
 
 		img_location.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +100,7 @@ public class PageConnectView {
 
 			@Override
 			public void onClick(View arg0) {
-				activity.startActivityForResult(new Intent(activity, CityChooseActivity.class),
-						MsgTag.Request_GetWeather);
+				activity.startActivityForResult(new Intent(activity, CityChooseActivity.class), MsgTag.Request_GetWeather);
 			}
 		});
 
@@ -116,8 +114,7 @@ public class PageConnectView {
 		text_tem_now.setText(WeatherInfo.Instance().getTem_Now());
 
 		String imgName = "ww" + WeatherInfo.Instance().getImg_Weather();
-		img_Weather.setImageResource(
-				mActivity.getResources().getIdentifier(imgName, "drawable", mActivity.getPackageName()));
+		img_Weather.setImageResource(mActivity.getResources().getIdentifier(imgName, "drawable", mActivity.getPackageName()));
 	}
 
 	static Handler handler = new Handler() {
@@ -126,7 +123,7 @@ public class PageConnectView {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			if (msg.what == MsgTag.Msg_GetPositionSuccess) {
-				WeatherUtil.upDateWeatherInfo(mActivity, handler);
+				WeatherUtil.upDateWeatherInfo(handler);
 			}
 			if (msg.what == MsgTag.Msg_GetWeatherSuccess) {
 				updateWeatherPanel();

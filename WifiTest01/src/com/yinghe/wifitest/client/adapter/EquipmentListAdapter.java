@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wifitest01.R;
-import com.example.wifitest01.R.color;
-import com.yinghe.wifitest.client.entity.SupportCityInfo;
 import com.yinghe.wifitest.client.utils.EquipmentUtil;
 
 public class EquipmentListAdapter extends BaseAdapter {

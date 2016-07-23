@@ -15,14 +15,12 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.yinghe.wifitest.client.entity.LocationInfo;
 import com.yinghe.wifitest.client.entity.MsgTag;
@@ -100,6 +98,7 @@ public class LocationUtil {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private static boolean getPositionSuccess(Activity activity) {
 		LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
@@ -107,10 +106,10 @@ public class LocationUtil {
 		criteria.setAccuracy(Criteria.ACCURACY_COARSE); // 设置水平位置精度
 		List<String> providers = locationManager.getAllProviders();
 		String providerName = locationManager.getBestProvider(criteria, true);
+
 		if ("gps".equals(providerName) && providers.contains(providerName)) {
-			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				Toast.makeText(activity, "请开启GPS", Toast.LENGTH_SHORT).show();
-				activity.startActivityForResult(new Intent(Settings.ACTION_SECURITY_SETTINGS), 0);
+			if (!Settings.Secure.isLocationProviderEnabled(activity.getContentResolver(), LocationManager.GPS_PROVIDER)) {
+				Settings.Secure.setLocationProviderEnabled(activity.getContentResolver(), LocationManager.GPS_PROVIDER, true);
 			}
 		}
 		if (providerName != null) {

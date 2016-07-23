@@ -1,47 +1,34 @@
 package com.yinghe.wifitest.client.utils;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import android.annotation.SuppressLint;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.StructuredName;
-import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.RawContacts;
 
 public class LanguageUtil {
 	@SuppressLint("DefaultLocale")
-	public static String getPinyin(Context context, String input) {
-		ContentValues values = new ContentValues();
-		Uri rawContactUri = context.getContentResolver().insert(RawContacts.CONTENT_URI, values);
-		long rawContactId = ContentUris.parseId(rawContactUri);
-		values.clear();
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
-		values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
-		values.put(StructuredName.GIVEN_NAME, input);
-		context.getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values);
+	public static String getPinyin(String inputString) {
+		HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+		format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+		format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+		format.setVCharType(HanyuPinyinVCharType.WITH_V);
 
-		String Where = ContactsContract.RawContacts.CONTACT_ID + " =" + rawContactId;
-		String[] projection = { "sort_key" };
-		Cursor cur = context.getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, projection, Where,
-				null, null);
-		int pinyin1 = cur.getColumnIndex("sort_key");
-		cur.moveToFirst();
-		String pinyin = cur.getString(pinyin1);
-
-		String result = "";
-		for (int i = 0; i < pinyin.length(); i++) {
-			String temp = pinyin.substring(i, i + 1);
-			if (temp.matches("[a-zA-Z]")) {
-				result = result + temp;
+		char[] input = inputString.trim().toCharArray();
+		String output = "";
+		try {
+			for (int i = 0; i < input.length; i++) {
+				if (java.lang.Character.toString(input[i]).matches("[\\u4E00-\\u9FA5]+")) {
+					String[] temp = PinyinHelper.toHanyuPinyinStringArray(input[i], format);
+					output += temp[0];
+				} else
+					output += java.lang.Character.toString(input[i]);
 			}
+		} catch (BadHanyuPinyinOutputFormatCombination e) {
+			e.printStackTrace();
 		}
-
-		context.getContentResolver().delete(ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawContactId), null,
-				null);
-		return result.toLowerCase();
+		return output;
 	}
-
 }

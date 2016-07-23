@@ -170,7 +170,7 @@ public class CityChooseActivity extends Activity implements OnClickListener {
 
 	private void updateWeather(String city) {
 		LocationInfo.Instance().setCity(city);
-		WeatherUtil.upDateWeatherInfo(mActivity, handler);
+		WeatherUtil.upDateWeatherInfo(handler);
 	};
 
 	@SuppressLint("HandlerLeak")
