@@ -64,9 +64,6 @@
             android:name="com.yinghe.wifitest.client.activity.ScanActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name="com.yinghe.wifitest.client.activity.ScanActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
             android:name="com.dtr.zxing.activity.ResultActivi"
             android:theme="@android:style/Theme.NoTitleBar" />
 

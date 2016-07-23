@@ -18,16 +18,17 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_main);
+		// setContentView(R.layout.activity_main);
 		this.activity = this;
 		LocationUtil.initLocation(activity, null);
 
-//		ListView listView = (ListView) findViewById(R.id.myListView1);
-//		EquipmentListAdapter adapter = new EquipmentListAdapter(activity, HotCityInfo.Instance());
-//		listView.setAdapter(adapter);
+		// ListView listView = (ListView) findViewById(R.id.myListView1);
+		// EquipmentListAdapter adapter = new EquipmentListAdapter(activity,
+		// HotCityInfo.Instance());
+		// listView.setAdapter(adapter);
 
 		startActivity(new Intent(getApplicationContext(), SplashActivity.class));
-		// finish();
+		finish();
 		// BaiduLotion.initLockPst(getApplicationContext(), null);
 
 	}
