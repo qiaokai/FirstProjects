@@ -1,19 +1,9 @@
 package com.yinghe.wifitest.client.view;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.example.wifitest01.R;
-import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.activity.CityChooseActivity;
+import com.yinghe.wifitest.client.activity.EquipmentActivity;
+import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
 import com.yinghe.wifitest.client.entity.HotCityInfo;
 import com.yinghe.wifitest.client.entity.LocationInfo;
@@ -21,6 +11,19 @@ import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.entity.WeatherInfo;
 import com.yinghe.wifitest.client.utils.LocationUtil;
 import com.yinghe.wifitest.client.utils.WeatherUtil;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class PageConnectView {
 	private static Activity mActivity;
@@ -55,6 +58,14 @@ public class PageConnectView {
 
 		EquipmentListAdapter adapter = new EquipmentListAdapter(mActivity, HotCityInfo.Instance());
 		list_Equipment.setAdapter(adapter);
+		list_Equipment.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				mActivity.startActivity(new Intent(mActivity, EquipmentActivity.class));
+
+			}
+		});
 
 		text_EnterScenes = (TextView) view.findViewById(R.id.Text_enter_scenes);
 		text_EnterScenes.setOnClickListener(new OnClickListener() {

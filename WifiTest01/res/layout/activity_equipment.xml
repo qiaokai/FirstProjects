@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/lable_equipmentId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="48dp"
+        android:text="设备ID"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/lable_equipmentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lable_equipmentId"
+        android:layout_marginTop="24dp"
+        android:text="设备名称"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/lable_currentElectric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lable_currentVoltage"
+        android:layout_marginTop="16dp"
+        android:text="当前电流"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/lable_lastElectricQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lable_currentElectric"
+        android:layout_marginTop="18dp"
+        android:text="上次电量"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/lable_equipmentState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lable_equipmentName"
+        android:layout_marginTop="16dp"
+        android:text="设备状态"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/lable_currentVoltage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lable_equipmentState"
+        android:text="当前电压"
+        android:textSize="18sp" />
+
+</RelativeLayout>
