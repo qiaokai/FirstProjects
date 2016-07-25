@@ -7,5 +7,12 @@
     <string name="user">我的</string>
     <string name="closed">关闭中</string>
     <string name="opened">已开启</string>
+    <string name="equipmentId">设备编号：</string>
+    <string name="equipmentName">设备名称：</string>
+    <string name="currentVoltage">当前电压：</string>
+    <string name="currentElectric">当前电流：</string>
+    <string name="lastElectricQuantity">上次电量：</string>
+    <string name="currentQuantity">当前电量：</string>
+    <string name="availableQuantity">可用电量：</string>
 
 </resources>

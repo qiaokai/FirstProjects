@@ -3,17 +3,17 @@
 
     <!-- <solid android:color="#ce102c"/> -->
     <stroke
-        android:width="5dp"
+        android:width="1.5dp"
         android:color="@color/blue" />
 
-    <corners android:radius="40dp" />
+    <corners android:radius="20dp" />
 
     <solid android:color="@color/ivory" />
 
     <padding
-        android:bottom="10dp"
-        android:left="25dp"
-        android:right="25dp"
-        android:top="10dp" />
+        android:bottom="5dp"
+        android:left="20dp"
+        android:right="20dp"
+        android:top="5dp" />
 
 </shape>

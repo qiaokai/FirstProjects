@@ -66,6 +66,9 @@
         <activity
             android:name="com.dtr.zxing.activity.ResultActivi"
             android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.yinghe.wifitest.client.activity.EquipmentActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <service
             android:name="com.baidu.location.f"
