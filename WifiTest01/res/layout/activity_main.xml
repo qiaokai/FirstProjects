@@ -6,19 +6,39 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="hello_world" />
+        android:text="hello" />
 
-    <com.yinghe.wifitest.client.view.MyListView
-        android:id="@+id/myListView1"
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sendMsg"
+        android:layout_marginTop="43dp"
+        android:text="send" />
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnSend"
+        android:layout_marginTop="35dp"
+        android:text="connect" />
+
+    <EditText
+        android:id="@+id/sendMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true" >
+        android:layout_marginTop="29dp"
+        android:ems="10"
+        android:inputType="text" >
 
-    </com.yinghe.wifitest.client.view.MyListView>
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>
