@@ -96,6 +96,8 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	int count = 0;
+
 	public void UDP_send(String msg) {
 		DatagramSocket socket = null;
 		try {
@@ -105,7 +107,7 @@ public class MainActivity extends Activity {
 				socket.bind(new InetSocketAddress(8080));
 			}
 
-//			socket = new DatagramSocket(8080);//
+			// socket = new DatagramSocket(8080);//
 			// 创建DatagramSocket对象并绑定一个本地端口号，注意，如果客户端需要接收服务器的返回数据,还需要使用这个端口号来接收数据，所以一定要记住
 			// Inet4Address serverAddress = (Inet4Address) //
 			// Inet4Address.getByName("255.255.255.255");//
@@ -117,19 +119,22 @@ public class MainActivity extends Activity {
 			// 参数分别为：发送数据的字节数组对象、数据的长度、目标主机的网络地址、目标主机端口号，发送数据时一定要指定接收方的网络地址和端口号
 			socket.send(pack);// 发送数据包
 			// -----------接收服务器返回的数据-------------
-			byte[] b = new byte[4 * 1024];// 创建一个byte类型的数组，用于存放接收到得数据
-			DatagramPacket pack2 = new DatagramPacket(b, b.length);//
-			// 定义一个DatagramPacket对象用来存储接收的数据包，并指定大小和长度
-			socket.receive(pack2);// 接收数据包
-			
-			System.out.println("000000000000000000002");
-			// data.getData()是得到接收到的数据的字节数组对象，0为起始位置，pack.getLength()得到数据的长度
-			
-			String result = new String(pack2.getData(), pack2.getOffset(), pack2.getLength());// 把返回的数据转换为字符串
-			textView.setText(result);
-			socket.close();// 释放资源
+			while (true) {
+				byte[] b = new byte[4 * 1024];// 创建一个byte类型的数组，用于存放接收到得数据
+				DatagramPacket pack2 = new DatagramPacket(b, b.length);//
+				// 定义一个DatagramPacket对象用来存储接收的数据包，并指定大小和长度
+				socket.receive(pack2);// 接收数据包
+
+				System.out.println("000000000000000000002");
+				// data.getData()是得到接收到的数据的字节数组对象，0为起始位置，pack.getLength()得到数据的长度
+
+				String result = new String(pack2.getData(), pack2.getOffset(), pack2.getLength());// 把返回的数据转换为字符串
+				textView.setText(result + ":" + count);
+				Toast.makeText(getApplicationContext(), result + ":" + count, Toast.LENGTH_SHORT).show();
+				count=count+1;
+				socket.close();// 释放资源
+			}
 			// 在线程中更新UI
-			System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
