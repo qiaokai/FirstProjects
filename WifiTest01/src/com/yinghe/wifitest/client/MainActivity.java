@@ -106,16 +106,10 @@ public class MainActivity extends Activity {
 				socket.setReuseAddress(true);
 				socket.bind(new InetSocketAddress(8080));
 			}
-
-			// socket = new DatagramSocket(8080);//
-			// 创建DatagramSocket对象并绑定一个本地端口号，注意，如果客户端需要接收服务器的返回数据,还需要使用这个端口号来接收数据，所以一定要记住
-			// Inet4Address serverAddress = (Inet4Address) //
-			// Inet4Address.getByName("255.255.255.255");//
-			// 使用这个也行，表示使用4个字节的ip地址
 			byte[] data = msg.getBytes();// 把字符串转为字节数组
-			InetAddress serverAddress = InetAddress.getByName("255.255.255.255");//
+			InetAddress serverAddress = InetAddress.getByName("10.20.73.16");//
 			// 得到ip或主机名为192.168.1.100的网络地址对象
-			DatagramPacket pack = new DatagramPacket(data, data.length, serverAddress, 9000);//
+			DatagramPacket pack = new DatagramPacket(data, data.length, serverAddress, 8080);//
 			// 参数分别为：发送数据的字节数组对象、数据的长度、目标主机的网络地址、目标主机端口号，发送数据时一定要指定接收方的网络地址和端口号
 			socket.send(pack);// 发送数据包
 			// -----------接收服务器返回的数据-------------
@@ -131,7 +125,7 @@ public class MainActivity extends Activity {
 				String result = new String(pack2.getData(), pack2.getOffset(), pack2.getLength());// 把返回的数据转换为字符串
 				textView.setText(result + ":" + count);
 				Toast.makeText(getApplicationContext(), result + ":" + count, Toast.LENGTH_SHORT).show();
-				count=count+1;
+				count = count + 1;
 				socket.close();// 释放资源
 			}
 			// 在线程中更新UI
