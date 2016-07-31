@@ -8,15 +8,29 @@ public class DigitalUtils {
 	 * @param input
 	 * @return
 	 */
-	public static String StringToAsciiString(String input) {
+	public static String asciiByteToAsciiString(byte[] input) {
 		String result = "";
-		int max = input.length();
-		for (int i = 0; i < max; i++) {
-			char c = input.charAt(i);
-			String b = Integer.toHexString(c) + " ";
+		for (int i = 0; i < input.length; i++) {
+			String b = Integer.toHexString(input[i] & 0xFF) + " ";
+			// String b = Integer.toHexString(c) + " ";
 			result = result + b;
 		}
 		return result;
+	}
+
+	/**
+	 *
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public static String asciiByteToString(byte[] input) {
+		StringBuffer result = new StringBuffer();
+		for (int i = 0; i < input.length; i++) {
+			char temp = (char) input[i];
+			result.append(temp);
+		}
+		return result.toString();
 	}
 
 	/**
@@ -92,6 +106,28 @@ public class DigitalUtils {
 		}
 		return result;
 
+	}
+
+	public static byte[] get645BytesToAsciiBytes(byte[] input) {
+		byte[] result = new byte[1024];
+		int countLength = 0;
+		int countData = -2;
+		for (int i = 0; i < input.length; i++) {
+			if (input[i] == 0x68) {
+				countData += 1;
+			}
+			if (countData == 0) {
+				countLength = input[i + 2];
+				countData = i + 3;
+				result = new byte[countLength];
+				break;
+			}
+		}
+		for (int i = 0; i < input.length - 2 - countData; i++) {
+			result[i] = (byte) (input[countData + i] - 0x33);
+		}
+
+		return result;
 	}
 
 	public static String AsciiStringToString(String input) {

@@ -5,40 +5,56 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
+        android:id="@+id/text_ip"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="hello" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="20sp" />
 
     <Button
-        android:id="@+id/btnSend"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sendMsg"
-        android:layout_marginTop="43dp"
-        android:text="send" />
-
-    <Button
-        android:id="@+id/btnConnect"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/btnSend"
-        android:layout_marginTop="35dp"
-        android:text="connect" />
-
-    <EditText
-        android:id="@+id/sendMsg"
+        android:id="@+id/button_getId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="29dp"
-        android:ems="10"
-        android:inputType="text" >
+        android:layout_below="@+id/text_ip"
+        android:text="Get Id" />
 
-        <requestFocus />
-    </EditText>
+    <Button
+        android:id="@+id/Button_upDateWifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button_getId"
+        android:text="upDateWifi" />
+
+     <Button
+         android:id="@+id/Button_setWifi"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:layout_marginBottom="50dp"
+         android:text="setWifi" />
+
+     <Button
+         android:id="@+id/Button_changeType"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/Button_TestWifi"
+         android:layout_marginTop="68dp"
+         android:text="changeType" />
+
+     <Button
+         android:id="@+id/Button_TestWifi"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/Button_upDateWifi"
+         android:layout_marginTop="28dp"
+         android:text="TestWifi" />
 
 </RelativeLayout>

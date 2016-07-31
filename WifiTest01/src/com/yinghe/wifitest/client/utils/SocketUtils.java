@@ -1,7 +1,7 @@
 package com.yinghe.wifitest.client.utils;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -23,43 +23,48 @@ public class SocketUtils {
 	 * @param input
 	 * @return 服务器返回数据
 	 */
-	public static void sendMsgWithTCPSocket(final String serverIp, final int serverPort, final byte[] input) {
+	public static void sendMsgWithTCPSocket(final String serverIp, final int serverPort, final byte[] input, final Handler handler) {
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
 				String recept = "";
 				Socket socket = null;
 				DataOutputStream dataOutputStream = null;
-				DataInputStream dataInputStream = null;
+				InputStream inputStream = null;
 				try {
 					if (socket == null)
 						socket = new Socket(serverIp, serverPort);
 					if (dataOutputStream == null)
 						dataOutputStream = new DataOutputStream(socket.getOutputStream());
+					if (inputStream == null)
+						inputStream = socket.getInputStream();
+
 					dataOutputStream.write(input);
 					dataOutputStream.flush();
 
-					if (dataInputStream == null)
-						dataInputStream = new DataInputStream(socket.getInputStream());
-					System.out.println("!!!!!!!!!!!!!!!!");
-					int backLength = dataInputStream.available();
-					System.out.println("00:" + backLength);
-					char[] buffer = new char[backLength];
-					for (int j = 0; j < backLength; ++j) {
-						buffer[j] = (char) dataInputStream.readByte();
-						buffer[j] = (char) (buffer[j] + '0');
+					byte[] data = new byte[1024];
+					int length = -1;
+					while ((length = inputStream.read(data)) != -1) {
+						for (int i = 0; i < length; i++) {
+							recept += Integer.toHexString(data[i] & 0xFF) + " ";
+						}
+						if (length < 1024) {
+							break;
+						}
 					}
-					recept = new String(buffer);
-					System.out.println(recept);
+					
+					Message message = new Message();
+					String[] temp=new String[]{"",recept};
+					message.obj=temp;
+					handler.sendMessage(message);
 					socket.close();
 					dataOutputStream.close();
-					dataInputStream.close();
+					inputStream.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
-		}, 100);
+		}, 10);
 
 	}
 
@@ -77,7 +82,12 @@ public class SocketUtils {
 			@Override
 			public void run() {
 				try {
-					DatagramSocket socket = new DatagramSocket(new InetSocketAddress(clientPort));
+					DatagramSocket socket = null;
+					if (socket == null) {
+						socket = new DatagramSocket(null);
+						socket.setReuseAddress(true);
+						socket.bind(new InetSocketAddress(clientPort));
+					}
 					InetAddress serverAddress = InetAddress.getByName(serverIp);//
 					DatagramPacket pack = new DatagramPacket(input, input.length, serverAddress, serverPort);//
 					socket.send(pack);// 发送数据包
@@ -89,8 +99,10 @@ public class SocketUtils {
 					for (int i = 0; i < receivePack.getLength(); i++) {
 						recept += Integer.toHexString(receivePack.getData()[i] & 0xFF) + " ";
 					}
+					String ip= receivePack.getAddress().getHostAddress();
 					Message message = new Message();
-					message.obj = recept;
+					String[] msg=new String[]{ip,recept};
+					message.obj=msg;
 					handler.sendMessage(message);
 					socket.close();
 				} catch (Exception e) {
