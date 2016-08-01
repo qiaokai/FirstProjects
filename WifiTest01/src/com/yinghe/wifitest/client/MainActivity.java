@@ -56,12 +56,12 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		textView.setText("");
 		switch (v.getId()) {
 		case R.id.button_getId:
 			CourseManager.getEquipmentId("255.255.255.255", 9000, 8080, handler);
 			break;
 		case R.id.Button_upDateWifi:
-			textView.setText("");
 			CourseManager.upDateWifi(ip, 9000, 8082, handler);
 			break;
 		case R.id.Button_TestWifi:

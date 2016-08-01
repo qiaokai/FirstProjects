@@ -1,5 +1,6 @@
 package com.yinghe.wifitest.client.manager;
 
+import com.yinghe.wifitest.client.utils.DLT645_2007Utils;
 import com.yinghe.wifitest.client.utils.DigitalUtils;
 import com.yinghe.wifitest.client.utils.SocketUtils;
 
@@ -15,8 +16,7 @@ public class CourseManager {
 
 	public static void upDateWifi(String serverIp, int serverPort, int clientPort, Handler handler) {
 		String temp = "AT+NETP=TCP,SERVER," + clientPort + "," + serverIp;
-		byte[] temp1 = DigitalUtils.StringToAsciiBytes(temp);
-		byte[] input = DigitalUtils.AsciiBytesTo645Bytes(temp1);
+		byte[] input = DLT645_2007Utils.getDLTOrder(temp);
 		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort, input, handler);
 	}
 
@@ -32,19 +32,22 @@ public class CourseManager {
 		// System.out.println("changeType");
 		// String temp ="AT+Z";
 
-		byte[] temp1 = DigitalUtils.StringToAsciiBytes(temp);
+		byte[] temp1 = DigitalUtils.getHexBytes(temp);
 		System.out.println("changeType:" + DigitalUtils.asciiByteToAsciiString(temp1));
 		byte[] input = DigitalUtils.AsciiBytesTo645Bytes(temp1);
-		System.out.println("changeType:" + DigitalUtils.asciiByteToAsciiString(input));
-		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort, input, handler);
+
+		// System.out.println("changeType:" +
+		// DigitalUtils.asciiByteToAsciiString(input));
+		// SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort,
+		// input, handler);
 	}
 
 	public static void setWifi(String serverIp, int serverPort, int clientPort, Handler handler) {
-		String temp = "AT+WSSSID=FAST_30E8";
-		byte[] temp1 = DigitalUtils.StringToAsciiBytes(temp);
-		System.out.println(DigitalUtils.asciiByteToAsciiString(temp1));
-		byte[] input = DigitalUtils.AsciiBytesTo645Bytes(temp1);
-		System.out.println(DigitalUtils.asciiByteToAsciiString(input));
-		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort, input, handler);
+//		String temp = "AT+WSSSID=FAST_30E8";
+//		byte[] temp1 = DigitalUtils.StringToAsciiBytes(temp);
+//		System.out.println(DigitalUtils.asciiByteToAsciiString(temp1));
+//		byte[] input = DigitalUtils.AsciiBytesTo645Bytes(temp1);
+//		System.out.println(DigitalUtils.asciiByteToAsciiString(input));
+//		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort, input, handler);
 	}
 }

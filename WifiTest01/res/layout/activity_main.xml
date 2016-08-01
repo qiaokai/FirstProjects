@@ -14,40 +14,6 @@
         android:text="TextView"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/button_getId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/text_ip"
-        android:text="Get Id" />
-
-    <Button
-        android:id="@+id/Button_upDateWifi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/button_getId"
-        android:text="upDateWifi" />
-
-     <Button
-         android:id="@+id/Button_setWifi"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentBottom="true"
-         android:layout_alignParentLeft="true"
-         android:layout_marginBottom="50dp"
-         android:text="setWifi" />
-
-     <Button
-         android:id="@+id/Button_changeType"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/Button_TestWifi"
-         android:layout_marginTop="68dp"
-         android:text="changeType" />
-
      <Button
          android:id="@+id/Button_TestWifi"
          android:layout_width="match_parent"
@@ -55,6 +21,47 @@
          android:layout_alignParentLeft="true"
          android:layout_below="@+id/Button_upDateWifi"
          android:layout_marginTop="28dp"
+         android:minHeight="40dp"
          android:text="TestWifi" />
+
+     <Button
+         android:id="@+id/Button_upDateWifi"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/button_getId"
+         android:layout_marginTop="27dp"
+         android:minHeight="40dp"
+         android:text="upDateWifi" />
+
+     <Button
+         android:id="@+id/button_getId"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/text_ip"
+         android:layout_marginTop="16dp"
+         android:minHeight="40dp"
+         android:text="Get Id" />
+
+     <Button
+         android:id="@+id/Button_setWifi"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/Button_TestWifi"
+         android:layout_marginTop="24dp"
+         android:minHeight="40dp"
+         android:text="setWifi" />
+
+     <Button
+         android:id="@+id/Button_changeType"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/Button_setWifi"
+         android:layout_marginTop="24dp"
+         android:minHeight="40dp"
+         android:text="changeType" />
 
 </RelativeLayout>

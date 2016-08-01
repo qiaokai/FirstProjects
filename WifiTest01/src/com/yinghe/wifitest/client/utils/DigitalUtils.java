@@ -34,12 +34,12 @@ public class DigitalUtils {
 	}
 
 	/**
-	 * 字符串转ASCII码数组
+	 * 获取16进制的数据
 	 * 
 	 * @param input
 	 * @return
 	 */
-	public static byte[] StringToAsciiBytes(String input) {
+	public static byte[] getHexBytes(String input) {
 		int length = input.trim().length();
 		byte[] result = new byte[length + 2];
 		for (int i = 0; i < length; i++) {
