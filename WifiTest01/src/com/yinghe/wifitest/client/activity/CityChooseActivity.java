@@ -178,11 +178,12 @@ public class CityChooseActivity extends Activity implements OnClickListener {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			if (msg.what == MsgTag.Msg_GetWeatherSuccess) {
-				setResult(MsgTag.Result_GetWeatherSuccess);
-			}
-			if (msg.what == MsgTag.Msg_GetWeatherFail) {
-				Toast.makeText(mActivity, "获取当前地区天气失败", Toast.LENGTH_SHORT).show();
+			if (msg.what == MsgTag.Msg_GetWeather) {
+				if (msg.arg1 == MsgTag.success) {
+					setResult(MsgTag.Result_GetWeatherSuccess);
+				} else {
+					Toast.makeText(mActivity, "获取当前地区天气失败", Toast.LENGTH_SHORT).show();
+				}
 			}
 			finish();
 		}

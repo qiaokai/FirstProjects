@@ -19,6 +19,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.text.TextUtils;
 
@@ -91,11 +92,17 @@ public class LocationUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (handler != null && succcess) {
-			handler.sendEmptyMessage(MsgTag.Msg_GetPositionSuccess);
-		} else if (handler != null) {
-			handler.sendEmptyMessage(MsgTag.Msg_GetPositionFail);
+		if (handler != null) {
+			Message message = new Message();
+			message.what = MsgTag.Msg_GetPosition;
+			if (succcess) {
+				message.arg1 = MsgTag.success;
+			} else {
+				message.arg1 = MsgTag.fail;
+			}
+			handler.sendMessage(message);
 		}
+
 	}
 
 	@SuppressWarnings("deprecation")

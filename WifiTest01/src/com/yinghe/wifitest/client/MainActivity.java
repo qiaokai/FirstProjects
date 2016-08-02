@@ -1,10 +1,15 @@
 package com.yinghe.wifitest.client;
 
 import com.example.wifitest01.R;
+import com.example.wifitest01.R.id;
+import com.yinghe.wifitest.client.activity.SplashActivity;
+import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.manager.CourseManager;
+import com.yinghe.wifitest.client.utils.LocationUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,8 +24,12 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Button getId;
 	private Button upDateWifi;
 	private Button testWifi;
-	private Button changeType;
+	private Button changeType_AP;
+	private Button changeType_STA;
 	private Button setWifi;
+	private Button getV;
+	private Button getA;
+	private Button getServerIp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,15 +40,23 @@ public class MainActivity extends Activity implements OnClickListener {
 		getId = (Button) findViewById(R.id.button_getId);
 		upDateWifi = (Button) findViewById(R.id.Button_upDateWifi);
 		testWifi = (Button) findViewById(R.id.Button_TestWifi);
-		changeType = (Button) findViewById(R.id.Button_changeType);
+		changeType_AP = (Button) findViewById(R.id.Button_changeType);
+		changeType_STA = (Button) findViewById(R.id.Button_changeType_STA);
 		setWifi = (Button) findViewById(R.id.Button_setWifi);
+		getV = (Button) findViewById(R.id.Button_getV);
+		getA = (Button) findViewById(R.id.Button_getA);
+		getServerIp = (Button) findViewById(R.id.Button_setWJAP);
 
 		textView.setOnClickListener(this);
 		getId.setOnClickListener(this);
 		upDateWifi.setOnClickListener(this);
 		testWifi.setOnClickListener(this);
-		changeType.setOnClickListener(this);
+		changeType_AP.setOnClickListener(this);
+		changeType_STA.setOnClickListener(this);
 		setWifi.setOnClickListener(this);
+		getV.setOnClickListener(this);
+		getA.setOnClickListener(this);
+		getServerIp.setOnClickListener(this);
 	}
 
 	String ip = "192.168.1.105";
@@ -47,10 +64,16 @@ public class MainActivity extends Activity implements OnClickListener {
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			String[] temp = (String[]) msg.obj;
-			textView.setText(temp[0] + ":" + temp[1]);
-
-			// textView.setText(DigitalUtils.StringToAsciiString(temp));
+			if (msg.what == MsgTag.Msg_GetEquipmentId) {
+//				ip = msg.obj.toString().split("&&")[0];
+				textView.setText("设备Id:" + msg.obj.toString());
+			} else if (msg.what == MsgTag.Msg_GetEquipmentVoltage && msg.arg1 == MsgTag.success) {
+				textView.setText("电压:" + msg.obj.toString());
+			} else if (msg.what == MsgTag.Msg_GetEquipmentElectric && msg.arg1 == MsgTag.success) {
+				textView.setText("电流:" + msg.obj.toString());
+			} else {
+				textView.setText(msg.obj.toString());
+			}
 		}
 	};
 
@@ -59,19 +82,31 @@ public class MainActivity extends Activity implements OnClickListener {
 		textView.setText("");
 		switch (v.getId()) {
 		case R.id.button_getId:
-			CourseManager.getEquipmentId("255.255.255.255", 9000, 8080, handler);
+			CourseManager.getEquipmentId("255.255.255.255", 9000, 8082, handler);
 			break;
 		case R.id.Button_upDateWifi:
 			CourseManager.upDateWifi(ip, 9000, 8082, handler);
 			break;
 		case R.id.Button_TestWifi:
-			CourseManager.tetWifi(ip, 8082, handler);
+			CourseManager.tetWifi(ip, 8088, handler);
 			break;
 		case R.id.Button_changeType:
-			CourseManager.changeType("255.255.255.255", 9000, 8080, handler);
+			CourseManager.changeType(ip, 8082, handler);
+			break;
+		case R.id.Button_changeType_STA:
+			CourseManager.changeType_STA("255.255.255.255", 9000, handler);
 			break;
 		case R.id.Button_setWifi:
 			CourseManager.setWifi("255.255.255.255", 9000, 8080, handler);
+			break;
+		case R.id.Button_getV:
+			CourseManager.getVoltage(ip, 8082, handler);
+			break;
+		case R.id.Button_getA:
+			CourseManager.getElectric(ip, 8082, handler);
+			break;
+		case R.id.Button_setWJAP:
+			CourseManager.setWJAP("192.168.1.105", 8082, 8080, handler);
 			break;
 		default:
 			break;

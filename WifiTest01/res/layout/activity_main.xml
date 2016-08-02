@@ -14,54 +14,86 @@
         android:text="TextView"
         android:textSize="20sp" />
 
-     <Button
-         android:id="@+id/Button_TestWifi"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/Button_upDateWifi"
-         android:layout_marginTop="28dp"
-         android:minHeight="40dp"
-         android:text="TestWifi" />
+    <Button
+        android:id="@+id/Button_TestWifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_upDateWifi"
+        android:minHeight="40dp"
+        android:text="TestWifi" />
 
-     <Button
-         android:id="@+id/Button_upDateWifi"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/button_getId"
-         android:layout_marginTop="27dp"
-         android:minHeight="40dp"
-         android:text="upDateWifi" />
+    <Button
+        android:id="@+id/Button_upDateWifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button_getId"
+        android:minHeight="40dp"
+        android:text="upDateWifi" />
 
-     <Button
-         android:id="@+id/button_getId"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/text_ip"
-         android:layout_marginTop="16dp"
-         android:minHeight="40dp"
-         android:text="Get Id" />
+    <Button
+        android:id="@+id/button_getId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_ip"
+        android:layout_marginTop="16dp"
+        android:minHeight="40dp"
+        android:text="Get Id" />
 
-     <Button
-         android:id="@+id/Button_setWifi"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/Button_TestWifi"
-         android:layout_marginTop="24dp"
-         android:minHeight="40dp"
-         android:text="setWifi" />
+    <Button
+        android:id="@+id/Button_setWifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_TestWifi"
+        android:minHeight="40dp"
+        android:text="setWifi" />
 
-     <Button
-         android:id="@+id/Button_changeType"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_below="@+id/Button_setWifi"
-         android:layout_marginTop="24dp"
-         android:minHeight="40dp"
-         android:text="changeType" />
+    <Button
+        android:id="@+id/Button_changeType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_setWifi"
+        android:minHeight="40dp"
+        android:text="changeType--AP" />
+
+    <Button
+        android:id="@+id/Button_getA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_getV"
+        android:minHeight="40dp"
+        android:text="获取电流" />
+
+    <Button
+        android:id="@+id/Button_setWJAP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_getA"
+        android:minHeight="40dp"
+        android:text="setWJAP" />
+
+    <Button
+        android:id="@+id/Button_changeType_STA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_changeType"
+        android:minHeight="40dp"
+        android:text="changeType--STA" />
+
+    <Button
+        android:id="@+id/Button_getV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Button_changeType_STA"
+        android:minHeight="40dp"
+        android:text="获取电压" />
 
 </RelativeLayout>

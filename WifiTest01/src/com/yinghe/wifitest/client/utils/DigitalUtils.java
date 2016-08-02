@@ -1,21 +1,48 @@
 package com.yinghe.wifitest.client.utils;
 
 public class DigitalUtils {
-
 	/**
-	 * 字符串转ASCII码字符串
+	 * 根据字节获取16进制字符串
 	 * 
 	 * @param input
 	 * @return
 	 */
-	public static String asciiByteToAsciiString(byte[] input) {
+	public static String getHexStringByByte(byte input) {
+		return Integer.toHexString(input & 0xFF) + " ";
+	}
+
+	/**
+	 * 根据字节数数组获取16进制字符串
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public static String getHexStringByBytes(byte[] input) {
 		String result = "";
 		for (int i = 0; i < input.length; i++) {
 			String b = Integer.toHexString(input[i] & 0xFF) + " ";
-			// String b = Integer.toHexString(c) + " ";
 			result = result + b;
 		}
 		return result;
+	}
+
+	public static byte[] getBytesByHexString(String input) {
+		byte[] b = new byte[input.length() / 2];
+		int j = 0;
+		for (int i = 0; i < b.length; i++) {
+			char c0 = input.charAt(j++);
+			char c1 = input.charAt(j++);
+			b[i] = (byte) ((parse(c0) << 4) | parse(c1));
+		}
+		return b;
+	}
+
+	private static int parse(char c) {
+		if (c >= 'a')
+			return (c - 'a' + 10) & 0x0f;
+		if (c >= 'A')
+			return (c - 'A' + 10) & 0x0f;
+		return (c - '0') & 0x0f;
 	}
 
 	/**

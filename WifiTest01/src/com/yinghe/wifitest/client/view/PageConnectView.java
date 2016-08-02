@@ -133,10 +133,10 @@ public class PageConnectView {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			if (msg.what == MsgTag.Msg_GetPositionSuccess) {
+			if (msg.what == MsgTag.Msg_GetPosition && msg.arg1 == MsgTag.success) {
 				WeatherUtil.upDateWeatherInfo(handler);
 			}
-			if (msg.what == MsgTag.Msg_GetWeatherSuccess) {
+			if (msg.what == MsgTag.Msg_GetWeather && msg.arg1 == MsgTag.success) {
 				updateWeatherPanel();
 			}
 

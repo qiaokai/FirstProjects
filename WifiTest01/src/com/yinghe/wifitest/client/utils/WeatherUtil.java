@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 
 import com.yinghe.wifitest.client.entity.LocationInfo;
@@ -78,11 +79,14 @@ public class WeatherUtil {
 					tem1 = tem1 > tem2 ? tem1 : tem2;
 					WeatherInfo.Instance().setTem_High(tem1 + "°");
 					if (handler != null) {
+						Message msg = new Message();
+						msg.what = MsgTag.Msg_GetWeather;
 						if (getWeatherFail) {
-							handler.sendEmptyMessage(MsgTag.Msg_GetWeatherFail);
+							msg.arg1 = MsgTag.fail;
 						} else {
-							handler.sendEmptyMessage(MsgTag.Msg_GetWeatherSuccess);
+							msg.arg1 = MsgTag.success;
 						}
+						handler.sendMessage(msg);
 					}
 					inputStream.close();
 				} catch (Exception e) {
