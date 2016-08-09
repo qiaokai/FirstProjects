@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import com.yinghe.wifitest.client.utils.DLT645_2007Utils;
 import com.yinghe.wifitest.client.utils.DigitalUtils;
+import com.yinghe.wifitest.client.utils.HttpUtils;
 import com.yinghe.wifitest.client.utils.SocketUtils;
 
 import android.os.Handler;
@@ -12,15 +13,21 @@ import android.os.Message;
 
 public class CourseManager {
 	public static void getEquipmentId(String serverIp, int serverPort, int clentport, final Handler handler) {
-		byte[] input = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68,
-				0x13, 0x00, (byte) 0xDF, 0x16 };
-		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clentport, input, new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				JSONObject response = (JSONObject) msg.obj;
-				DLT645_2007Utils.parseEquipmentId(response, handler);
-			}
-		});
+		// byte[] input = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE,
+		// (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte)
+		// 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68,
+		// 0x13, 0x00, (byte) 0xDF, 0x16 };
+		// SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clentport,
+		// input, new Handler() {
+		// @Override
+		// public void handleMessage(Message msg) {
+		// JSONObject response = (JSONObject) msg.obj;
+		// DLT645_2007Utils.parseEquipmentId(response, handler);
+		// }
+		// });
+
+		HttpUtils.getInstances(8080).getEquipmentId();
+
 	}
 
 	public static void upDateWifi(String serverIp, int serverPort, int clientPort, Handler handler) {
