@@ -10,14 +10,24 @@ public class BufferDecoder implements ProtocolDecoder {
 	public static final int MAX_MSG_SIZE = 5000;
 
 	public void decode(IoSession paramIoSession, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
-		if (in.prefixedDataAvailable(4, MAX_MSG_SIZE)) {
-			int length = in.getInt();
-			byte[] bytes = new byte[length];
-			in.get(bytes);
-			out.write(bytes);
-		} else {
-
-		}
+		
+//		IoBuffer ioBuffer = (IoBuffer)message;   
+	      byte[] b = new byte[in.limit()];   
+	      in.get(b);   
+//	      return b;   
+		out.write(new String(b));
+		
+		
+		
+		
+//		if (in.prefixedDataAvailable(4, MAX_MSG_SIZE)) {
+//			int length = in.getInt();
+//			byte[] bytes = new byte[length];
+//			in.get(bytes);
+//			out.write(bytes);
+//		} else {
+//
+//		}
 	}
 
 	@Override

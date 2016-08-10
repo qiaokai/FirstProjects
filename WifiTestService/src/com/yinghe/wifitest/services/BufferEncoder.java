@@ -17,12 +17,13 @@ public class BufferEncoder implements ProtocolEncoder {
 	public void encode(IoSession session, Object in, ProtocolEncoderOutput out) throws Exception {
 		if (in instanceof String) {
 			byte[] bytes = ((String) in).getBytes("utf-8");
-			System.out.println("压缩前：" + bytes.length);
-			bytes = compress(session, bytes);
-			System.out.println("压缩后：" + bytes.length);
-			IoBuffer buffer = IoBuffer.allocate(bytes.length + 4);
-			buffer.putInt(bytes.length);
-			buffer.put(bytes);
+			System.out.println(in);
+//			System.out.println("压缩前：" + bytes.length);
+//			bytes = compress(session, bytes);
+//			System.out.println("压缩后：" + bytes.length);
+			IoBuffer buffer = IoBuffer.allocate(bytes.length );
+//			buffer.putInt(bytes.length);
+			buffer.put(bytes,0,bytes.length);
 			buffer.flip();
 			session.write(buffer);
 			buffer.free();

@@ -4,14 +4,15 @@ import java.net.InetSocketAddress;
 
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 public class MainServer extends Thread {
 	// the mina info
 	public boolean isAlive = true;
 	public MainHandler handler;
-	public NioSocketAcceptor socketAcceptor;
-	public final int port = 8082;
+	public static NioSocketAcceptor socketAcceptor;
+	public final int port = 8067;
 	// database info
 	public static String dbHost = "192.168.1.103", dbName = "test", username = "work", password = "123456";
 	public static int dbPort = 3306;
@@ -20,7 +21,7 @@ public class MainServer extends Thread {
 		// start mina and database
 		MainServer main = new MainServer();
 		main.startAcceptor();
-		System.out.println("server started finished @ 192.168.1.122:8005");
+		System.out.println("server started finished .");
 	}
 
 	public MainServer() {
@@ -29,11 +30,14 @@ public class MainServer extends Thread {
 		socketAcceptor.getSessionConfig().setKeepAlive(true);
 		handler = new MainHandler();
 		socketAcceptor.setHandler(handler);
+		
+		System.out.println(socketAcceptor.getManagedSessions());
 		// 设置过滤器
 		DefaultIoFilterChainBuilder chain = socketAcceptor.getFilterChain();
 		chain.addLast("codec", new ProtocolCodecFilter(new BufferCoderFactory()));// 明码字符串
+//		chain.addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
 		// 启动数据库
-//		startDataBaseDriver(dbHost, dbPort, dbName, username, password);
+		//		startDataBaseDriver(dbHost, dbPort, dbName, username, password);
 	}
 
 	public void run() {

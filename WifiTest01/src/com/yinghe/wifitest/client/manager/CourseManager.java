@@ -1,5 +1,8 @@
 package com.yinghe.wifitest.client.manager;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,9 +27,15 @@ public class CourseManager {
 		// JSONObject response = (JSONObject) msg.obj;
 		// DLT645_2007Utils.parseEquipmentId(response, handler);
 		// }
-		// });
-
-		HttpUtils.getInstances(8080).getEquipmentId();
+		// }
+		
+		new Timer().schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				HttpUtils.getInstances(8076).getEquipmentId();
+			}
+		}, 10);
 
 	}
 
