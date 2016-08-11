@@ -1,4 +1,4 @@
-package com.yinghe.wifitest.services;
+package com.yinghe.wifitest.services.utils;
 
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
@@ -11,14 +11,12 @@ public class BufferCoderFactory implements ProtocolCodecFactory {
 
 	@Override
 	public ProtocolDecoder getDecoder(IoSession arg0) throws Exception {
-		// TODO Auto-generated method stub
 		decoder = new BufferDecoder();
 		return decoder;
 	}
 
 	@Override
 	public ProtocolEncoder getEncoder(IoSession arg0) throws Exception {
-		// TODO Auto-generated method stub
 		encoder = new BufferEncoder();
 		return encoder;
 	}
