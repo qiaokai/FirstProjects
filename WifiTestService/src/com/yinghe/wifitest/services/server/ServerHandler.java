@@ -19,9 +19,9 @@ public class ServerHandler implements IoHandler {
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		System.out.println(session.getRemoteAddress().toString() + ":   " + message.toString());
-		JSONObject temp=(JSONObject) message;
+//		JSONObject temp=(JSONObject) message;
 		
-		System.out.println(temp.toString());
+//		System.out.println(temp.toString());
 //		String msg=message.toString();
 //		ArrayList<String> temp=(ArrayList<String>) message;
 //		System.out.println(temp.get(index));

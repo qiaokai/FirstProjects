@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.json.JSONObject;
-
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 
@@ -90,6 +90,7 @@ public class SocketUtils {
 	 */
 	public static void sendMsgWithUDPSocket(final String serverIp, final int serverPort, final int clientPort, final byte[] input, final Handler handler) {
 		new Timer().schedule(new TimerTask() {
+			@SuppressLint("NewApi")
 			@Override
 			public void run() {
 				try {
@@ -112,9 +113,13 @@ public class SocketUtils {
 						data.add(receivePack.getData()[i]);
 					}
 					JSONObject result = new JSONObject();
-					result.put("IP", receivePack.getAddress().getHostAddress());
+					result.put("ip", receivePack.getAddress().getHostAddress());
+					result.put("port", receivePack.getPort());
 					result.put("data", data);
-
+					
+//					String ip = socket.getInetAddress().getHostAddress(); 
+//					int port = socket.getLocalPort() ;
+//					System.out.println("ip:"+serverAddress.getHostAddress());
 					if (handler != null) {
 						Message message = new Message();
 						message.obj = result;

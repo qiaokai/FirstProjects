@@ -119,26 +119,19 @@ public class DLT645_2007Utils {
 	 * @param handler
 	 */
 	@SuppressWarnings("unchecked")
-	public static void parseEquipmentId(JSONObject response, Handler handler) {
-		if (handler != null) {
-			String result = null;
-			Message message = new Message();
-			message.what = MsgTag.Msg_GetEquipmentId;
-			try {
-//				String ip = response.getString("IP");
-				ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
-				byte[] temp = getDataFromDLTResponse(data);
-				result = DigitalUtils.getHexStringByBytes(temp);
-				message.arg1 = MsgTag.success;
-				message.obj =  result;
-				handler.sendMessage(message);
-				return;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			message.arg1 = MsgTag.fail;
-			handler.sendMessage(message);
+	public static String parseEquipmentId(JSONObject response) {
+		String result = null;
+		try {
+
+			ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
+			byte[] temp = getDataFromDLTResponse(data);
+			result = DigitalUtils.getHexStringByBytes(temp);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
+
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")

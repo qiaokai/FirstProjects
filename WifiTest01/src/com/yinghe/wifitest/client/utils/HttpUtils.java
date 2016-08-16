@@ -1,15 +1,14 @@
 package com.yinghe.wifitest.client.utils;
 
 import java.net.InetSocketAddress;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+
+import com.yinghe.wifitest.client.utils.codeutil.BufferCoderFactory;
 
 //import comxg.test.ClientHandler;
 
@@ -20,27 +19,29 @@ public class HttpUtils {
 	private static int lastPort = 0;
 	private IoSession session;
 
-	private HttpUtils(final int port) {
+	@SuppressWarnings("deprecation")
+	private HttpUtils(String serverIp, final int port) {
 		lastPort = port;
-		chain.addLast("myChin", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
+		chain.addLast("codec", new ProtocolCodecFilter(new BufferCoderFactory()));
 		connector.setHandler(HttpResponse.getInstance());
 		connector.setConnectTimeout(30);
-		ConnectFuture cf = connector.connect(new InetSocketAddress("10.20.73.16", port));
+		ConnectFuture cf = connector.connect(new InetSocketAddress(serverIp, port));
 		// 等待连接成功
 		cf.awaitUninterruptibly();
 		session = cf.getSession();
 
 	}
 
-	public synchronized static HttpUtils getInstances(int port) {
+	public synchronized static HttpUtils getInstances(String serverIp, int port) {
 		if (null == instance || lastPort != port) {
-			instance = new HttpUtils(port);
+			instance = new HttpUtils(serverIp, port);
 		}
 		return instance;
 	}
 
 	public void getEquipmentId() {
 		System.out.println("OK: " + (session == null));
-		session.write("测试 01");
+		String output = "order:getEquipmentId&&IP:192.168.1.1";
+		session.write(output);
 	};
 }

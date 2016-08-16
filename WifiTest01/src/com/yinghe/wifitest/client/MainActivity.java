@@ -59,11 +59,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		getServerIp.setOnClickListener(this);
 	}
 
-	String ip = "192.168.1.105";
+	String ip = "192.168.1.103";
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
+			System.out.println("OK:"+msg.toString());
 			if (msg.what == MsgTag.Msg_GetEquipmentId) {
 //				ip = msg.obj.toString().split("&&")[0];
 				textView.setText("设备Id:" + msg.obj.toString());
@@ -82,7 +83,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		textView.setText("");
 		switch (v.getId()) {
 		case R.id.button_getId:
-			CourseManager.getEquipmentId("255.255.255.255", 9000, 8082, handler);
+			CourseManager.getEquipmentId("255.255.255.255", 9000, 8080, handler);
 			break;
 		case R.id.Button_upDateWifi:
 			CourseManager.upDateWifi(ip, 9000, 8082, handler);

@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.utils.DLT645_2007Utils;
 import com.yinghe.wifitest.client.utils.DigitalUtils;
 import com.yinghe.wifitest.client.utils.HttpUtils;
@@ -16,33 +17,48 @@ import android.os.Message;
 
 public class CourseManager {
 	public static void getEquipmentId(String serverIp, int serverPort, int clentport, final Handler handler) {
-		// byte[] input = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE,
-		// (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte)
-		// 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68,
-		// 0x13, 0x00, (byte) 0xDF, 0x16 };
-		// SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clentport,
-		// input, new Handler() {
-		// @Override
-		// public void handleMessage(Message msg) {
-		// JSONObject response = (JSONObject) msg.obj;
-		// DLT645_2007Utils.parseEquipmentId(response, handler);
-		// }
-		// }
-		
-		new Timer().schedule(new TimerTask() {
-			
+		byte[] input = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68,
+				0x13, 0x00, (byte) 0xDF, 0x16 };
+
+		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clentport, input, new Handler() {
 			@Override
-			public void run() {
-				HttpUtils.getInstances(8076).getEquipmentId();
+			public void handleMessage(Message msg) {
+				JSONObject response = (JSONObject) msg.obj;
+				try {
+					String IP = response.getString("ip");
+					String result = DLT645_2007Utils.parseEquipmentId(response);
+					String port = response.getString("port");
+					Message message = new Message();
+					message.what = MsgTag.Msg_GetEquipmentId;
+					message.arg1 = MsgTag.success;
+					message.obj = result + " ip:" + IP + ":" + port;
+					handler.sendMessage(message);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
-		}, 10);
+		});
+
+		// new Timer().schedule(new TimerTask() {
+		//
+		// @Override
+		// public void run() { b
+		// HttpUtils.getInstances("192.168.1.108",8089).getEquipmentId();
+		// }
+		// }, 10);
 
 	}
 
 	public static void upDateWifi(String serverIp, int serverPort, int clientPort, Handler handler) {
-		String temp = "AT+NETP=TCP,CLIENT," + 8088 + "," + "192.168.1.107";
+		String temp = "AT+NETP=TCP,CLIENT," + 8088 + "," + "192.168.1.108";
 		byte[] input = DLT645_2007Utils.getDltCode(temp);
-		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort, input, handler);
+		SocketUtils.sendMsgWithUDPSocket(serverIp, serverPort, clientPort, input, new Handler() {
+			@Override
+			public void handleMessage(Message msg) { 
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+			}
+		});
 	}
 
 	public static void tetWifi(String serverIp, int serverPort, final Handler handler) {
@@ -52,7 +68,13 @@ public class CourseManager {
 			@Override
 			public void handleMessage(Message msg) {
 				JSONObject response = (JSONObject) msg.obj;
-				DLT645_2007Utils.parseEquipmentId(response, handler);
+				try {
+					String IP = response.getString("IP");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				String ID = DLT645_2007Utils.parseEquipmentId(response);
+
 			}
 		});
 	}
