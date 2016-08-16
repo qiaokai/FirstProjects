@@ -11,7 +11,7 @@ import com.yinghe.wifitest.services.utils.BufferCoderFactory;
 
 public class MainServer {
 	public static NioSocketAcceptor acceptor;
-	public final int serverPort = 8089;
+	public final int serverPort = 8088;
 	// database info
 	public static String dbHost = "192.168.1.103", dbName = "test", username = "work", password = "123456";
 	public static int dbPort = 3306;

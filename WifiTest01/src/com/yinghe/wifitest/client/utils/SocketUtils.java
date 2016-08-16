@@ -1,9 +1,7 @@
 package com.yinghe.wifitest.client.utils;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -15,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
@@ -104,9 +103,11 @@ public class SocketUtils {
 					DatagramPacket pack = new DatagramPacket(input, input.length, serverAddress, serverPort);//
 					socket.send(pack);// 发送数据包
 
+					
 					byte[] receive = new byte[4 * 1024];// 创建一个byte类型的数组，用于存放接收到得数据
 					DatagramPacket receivePack = new DatagramPacket(receive, receive.length);// 创建一个DatagramPacket对象，并指定DatagramPacket对象的大小和长度
 					socket.receive(receivePack);// 读取接收到得数据
+					System.out.println("OKOKOKOK");
 
 					ArrayList<Byte> data = new ArrayList<Byte>();
 					for (int i = 0; i < receivePack.getLength(); i++) {
@@ -116,10 +117,7 @@ public class SocketUtils {
 					result.put("ip", receivePack.getAddress().getHostAddress());
 					result.put("port", receivePack.getPort());
 					result.put("data", data);
-					
-//					String ip = socket.getInetAddress().getHostAddress(); 
-//					int port = socket.getLocalPort() ;
-//					System.out.println("ip:"+serverAddress.getHostAddress());
+
 					if (handler != null) {
 						Message message = new Message();
 						message.obj = result;
@@ -141,24 +139,24 @@ public class SocketUtils {
 				Socket socket = null;
 				DataOutputStream dataOutputStream = null;
 				InputStream inputStream = null;
-				ServerSocket listen=null;
+				ServerSocket listen = null;
 				try {
-					if(listen==null){
+					if (listen == null) {
 						listen = new ServerSocket(8088);
-//						listen.setReuseAddress(true);
-//						listen.bind(new InetSocketAddress(8088));
-						}
+						// listen.setReuseAddress(true);
+						// listen.bind(new InetSocketAddress(8088));
+					}
 					while (true) {
 
-//						if (socket == null) {
-//							socket = new Socket("192.168.1.107", 8088);
-						
-					System.out.println("OKOKOKOKOKOK");
-					System.out.println(listen.getLocalSocketAddress());
-					System.out.println(listen.getChannel());
-							 socket = listen.accept();
-							 System.out.println(socket.getInetAddress());
-//						}
+						// if (socket == null) {
+						// socket = new Socket("192.168.1.107", 8088);
+
+						System.out.println("OKOKOKOKOKOK");
+						System.out.println(listen.getLocalSocketAddress());
+						System.out.println(listen.getChannel());
+						socket = listen.accept();
+						System.out.println(socket.getInetAddress());
+						// }
 						if (dataOutputStream == null)
 							dataOutputStream = new DataOutputStream(socket.getOutputStream());
 						if (inputStream == null)

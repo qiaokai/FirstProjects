@@ -7,6 +7,7 @@ import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import org.json.JSONObject;
 
 import com.yinghe.wifitest.client.utils.codeutil.BufferCoderFactory;
 
@@ -40,8 +41,18 @@ public class HttpUtils {
 	}
 
 	public void getEquipmentId() {
-		System.out.println("OK: " + (session == null));
-		String output = "order:getEquipmentId&&IP:192.168.1.1";
-		session.write(output);
+		JSONObject info;
+		try {
+			info = new JSONObject();
+			info.put("IP", "192.168.1.103");
+			info.put("order", "getEquipmentId");
+			session.write(info.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		OrderInfo info=new OrderInfo("192.168.1.103","getEquipmentId");
+//		String output = "order:getEquipmentId&&IP:192.168.1.103";
 	};
 }

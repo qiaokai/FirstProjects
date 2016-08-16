@@ -1,5 +1,8 @@
 package com.yinghe.wifitest.client;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.example.wifitest01.R;
 import com.example.wifitest01.R.id;
 import com.yinghe.wifitest.client.activity.SplashActivity;
@@ -59,15 +62,25 @@ public class MainActivity extends Activity implements OnClickListener {
 		getServerIp.setOnClickListener(this);
 	}
 
-	String ip = "192.168.1.103";
+	String ip = "";
+	int port = -1;
+	String result = "";
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			System.out.println("OK:"+msg.toString());
+			System.out.println("OK:" + msg.toString());
 			if (msg.what == MsgTag.Msg_GetEquipmentId) {
-//				ip = msg.obj.toString().split("&&")[0];
-				textView.setText("设备Id:" + msg.obj.toString());
+				try {
+					JSONObject temp = (JSONObject) msg.obj;
+					ip = temp.getString("ip");
+					port = temp.getInt("port");
+					result = temp.getString("result");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				// ip = msg.obj.toString().split("&&")[0];
+				textView.setText("设备Id:" + result + " IP:" + ip + " port:" + port + "  ");
 			} else if (msg.what == MsgTag.Msg_GetEquipmentVoltage && msg.arg1 == MsgTag.success) {
 				textView.setText("电压:" + msg.obj.toString());
 			} else if (msg.what == MsgTag.Msg_GetEquipmentElectric && msg.arg1 == MsgTag.success) {
@@ -86,10 +99,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			CourseManager.getEquipmentId("255.255.255.255", 9000, 8080, handler);
 			break;
 		case R.id.Button_upDateWifi:
-			CourseManager.upDateWifi(ip, 9000, 8082, handler);
+			CourseManager.upDateWifi(ip, port, 8080, handler);
 			break;
 		case R.id.Button_TestWifi:
-			CourseManager.tetWifi(ip, 8088, handler);
+			CourseManager.tetWifi("192.168.1.108", 8088, handler);
 			break;
 		case R.id.Button_changeType:
 			CourseManager.changeType(ip, 8082, handler);
