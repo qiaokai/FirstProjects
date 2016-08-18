@@ -3,9 +3,10 @@ package com.yinghe.wifitest.services.server;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-import org.json.JSONObject;
 
-public class ServerHandler implements IoHandler {
+import com.yinghe.wifitest.services.manager.EquipmentCommandManager;
+
+public class EquipmentHandler implements IoHandler {
 
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
@@ -15,21 +16,19 @@ public class ServerHandler implements IoHandler {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		System.out.println("session opened " + session.getRemoteAddress().toString());
+		// 拿到所有的客户端Session
 
 	}
 
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
-		System.out.println(session.getRemoteAddress().toString() + ":   " + message.toString());
+		System.out.println("equipment: " + session.getRemoteAddress().toString() + ":   " + message.toString());
+		System.out.println("equipment: " + session.getAttribute("command"));
+		System.out.println("equipment: " + session.getAttribute("IP"));
+		EquipmentCommandManager.execute(session, message);
+		//		String result = CommandManager.getResult(session,message.toString());
 
-		try {
-			JSONObject info = new JSONObject(message.toString());
-			System.out.println("IP:" + info.getString("IP"));
-			System.out.println("order:" + info.getString("order"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//		session.write(result);
 		// JSONObject temp=(JSONObject) message;
 
 		// System.out.println(temp.toString());
@@ -39,7 +38,7 @@ public class ServerHandler implements IoHandler {
 		//
 		//
 		//// String
-		session.write("fuck you too.");
+		//		session.write("fuck you too.");
 	}
 
 	@Override
@@ -48,18 +47,15 @@ public class ServerHandler implements IoHandler {
 	}
 
 	@Override
-	public void sessionClosed(IoSession arg0) throws Exception {
-
+	public void sessionClosed(IoSession session) throws Exception {
 	}
 
 	@Override
-	public void sessionCreated(IoSession arg0) throws Exception {
-
+	public void sessionCreated(IoSession session) throws Exception {
 	}
 
 	@Override
-	public void sessionIdle(IoSession arg0, IdleStatus arg1) throws Exception {
-
+	public void sessionIdle(IoSession session, IdleStatus arg1) throws Exception {
 	}
 
 }

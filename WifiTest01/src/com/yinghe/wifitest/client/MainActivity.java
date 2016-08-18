@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			CourseManager.upDateWifi(ip, port, 8080, handler);
 			break;
 		case R.id.Button_TestWifi:
-			CourseManager.tetWifi("192.168.1.108", 8088, handler);
+			CourseManager.tetWifi("10.20.64.20", 8088, handler);
 			break;
 		case R.id.Button_changeType:
 			CourseManager.changeType(ip, 8082, handler);

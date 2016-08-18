@@ -9,6 +9,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.json.JSONObject;
 
+import com.yinghe.wifitest.client.entity.CommandTag;
 import com.yinghe.wifitest.client.utils.codeutil.BufferCoderFactory;
 
 //import comxg.test.ClientHandler;
@@ -18,7 +19,8 @@ public class HttpUtils {
 	DefaultIoFilterChainBuilder chain = connector.getFilterChain();
 	private static HttpUtils instance = null;
 	private static int lastPort = 0;
-	private IoSession session;
+	private ConnectFuture connectFuture;
+	private static IoSession session;
 
 	@SuppressWarnings("deprecation")
 	private HttpUtils(String serverIp, final int port) {
@@ -26,10 +28,11 @@ public class HttpUtils {
 		chain.addLast("codec", new ProtocolCodecFilter(new BufferCoderFactory()));
 		connector.setHandler(HttpResponse.getInstance());
 		connector.setConnectTimeout(30);
-		ConnectFuture cf = connector.connect(new InetSocketAddress(serverIp, port));
+		connectFuture = connector.connect(new InetSocketAddress(serverIp, port));
 		// 等待连接成功
-		cf.awaitUninterruptibly();
-		session = cf.getSession();
+		connectFuture.awaitUninterruptibly();
+
+		session = connectFuture.getSession();
 
 	}
 
@@ -41,18 +44,14 @@ public class HttpUtils {
 	}
 
 	public void getEquipmentId() {
-		JSONObject info;
 		try {
-			info = new JSONObject();
-			info.put("IP", "192.168.1.103");
-			info.put("order", "getEquipmentId");
+			JSONObject info = new JSONObject();
+			info.put("IP", "10.20.64.20");
+			info.put("command", CommandTag.getEquipmentId);
 			session.write(info.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//		OrderInfo info=new OrderInfo("192.168.1.103","getEquipmentId");
-//		String output = "order:getEquipmentId&&IP:192.168.1.103";
+
 	};
 }
