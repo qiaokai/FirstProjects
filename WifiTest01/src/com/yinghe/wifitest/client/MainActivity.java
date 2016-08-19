@@ -39,6 +39,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		startActivity(new Intent(getApplicationContext(), SplashActivity.class));
+		finish();
+		
 		textView = (TextView) findViewById(R.id.text_ip);
 		getId = (Button) findViewById(R.id.button_getId);
 		upDateWifi = (Button) findViewById(R.id.Button_upDateWifi);
@@ -96,7 +99,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		textView.setText("");
 		switch (v.getId()) {
 		case R.id.button_getId:
-			CourseManager.getEquipmentId("255.255.255.255", 9000, 8080, handler);
+			CourseManager.getEquipmentId("10.20.64.20", 8088, 8080, handler);
 			break;
 		case R.id.Button_upDateWifi:
 			CourseManager.upDateWifi(ip, port, 8080, handler);

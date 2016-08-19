@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <TextView
+        android:id="@+id/text_waitConnectSuccess"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_testTCPConnect"
+        android:layout_below="@+id/text_testTCPConnect"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_course_setting_normal"
+        android:gravity="center"
+        android:text="@string/waitConnectSuccess"
+        android:textColor="@color/lawngreen"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_buildTCPConnect"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_searchEquipment"
+        android:layout_below="@+id/text_searchEquipment"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_course_setting_normal"
+        android:gravity="center"
+        android:text="@string/buildTCPConnect"
+        android:textColor="@color/lawngreen"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_testTCPConnect"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_buildTCPConnect"
+        android:layout_below="@+id/text_buildTCPConnect"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_course_setting_normal"
+        android:gravity="center"
+        android:text="@string/testTCPConnect"
+        android:textColor="@color/lawngreen"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_searchEquipment"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/img_course_setting_normal"
+        android:gravity="center"
+        android:text="@string/searchEquipment"
+        android:textColor="@color/lawngreen"
+        android:textSize="25sp" />
+
+</RelativeLayout>

@@ -80,7 +80,7 @@
             android:name="com.dtr.zxing.activity.ResultActivi"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name="com.yinghe.wifitest.client.activity.EquipmentActivity"
+            android:name="com.yinghe.wifitest.client.activity.EquipmentInfoActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <service

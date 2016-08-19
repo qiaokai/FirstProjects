@@ -32,6 +32,7 @@ public class CourseManager {
 					message.arg1 = MsgTag.success;
 					message.obj = response;
 					handler.sendMessage(message);
+					System.out.println(response.toString());
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -93,7 +94,7 @@ public class CourseManager {
 
 			@Override
 			public void run() {
-				HttpUtils.getInstances(serverIp, serverPort).getEquipmentId();
+				HttpUtils.getInstances().getEquipmentId();
 			}
 		}, 10);
 

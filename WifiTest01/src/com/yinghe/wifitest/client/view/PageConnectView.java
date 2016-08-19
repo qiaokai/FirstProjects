@@ -1,14 +1,17 @@
 package com.yinghe.wifitest.client.view;
 
+import java.util.ArrayList;
+
 import com.example.wifitest01.R;
 import com.yinghe.wifitest.client.activity.CityChooseActivity;
-import com.yinghe.wifitest.client.activity.EquipmentActivity;
+import com.yinghe.wifitest.client.activity.EquipmentInfoActivity;
 import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
 import com.yinghe.wifitest.client.entity.HotCityInfo;
 import com.yinghe.wifitest.client.entity.LocationInfo;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.entity.WeatherInfo;
+import com.yinghe.wifitest.client.manager.EquipmentManager;
 import com.yinghe.wifitest.client.utils.LocationUtil;
 import com.yinghe.wifitest.client.utils.WeatherUtil;
 
@@ -62,7 +65,7 @@ public class PageConnectView {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mActivity.startActivity(new Intent(mActivity, EquipmentActivity.class));
+				mActivity.startActivity(new Intent(mActivity, EquipmentInfoActivity.class));
 
 			}
 		});
@@ -72,7 +75,7 @@ public class PageConnectView {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				EquipmentManager.searchEquipment(handler);
 
 			}
 		});
@@ -138,6 +141,12 @@ public class PageConnectView {
 			}
 			if (msg.what == MsgTag.Msg_GetWeather && msg.arg1 == MsgTag.success) {
 				updateWeatherPanel();
+			}
+			if (msg.what == MsgTag.GetEquipmentIp && msg.arg1 == MsgTag.success) {
+				ArrayList<String> temp = (ArrayList<String>) msg.obj;
+				for (int i = 0; i < temp.size(); i++) {
+					System.out.println(temp.get(i));
+				}
 			}
 
 		}

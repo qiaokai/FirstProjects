@@ -9,9 +9,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -92,41 +94,40 @@ public class SocketUtils {
 			@SuppressLint("NewApi")
 			@Override
 			public void run() {
+				JSONArray result = new JSONArray();
+				DatagramSocket socket = null;
 				try {
-					DatagramSocket socket = null;
 					if (socket == null) {
 						socket = new DatagramSocket(null);
 						socket.setReuseAddress(true);
 						socket.bind(new InetSocketAddress(clientPort));
+						socket.setSoTimeout(3000);
 					}
 					InetAddress serverAddress = InetAddress.getByName(serverIp);//
 					DatagramPacket pack = new DatagramPacket(input, input.length, serverAddress, serverPort);//
 					socket.send(pack);// 发送数据包
-
-					
-					byte[] receive = new byte[4 * 1024];// 创建一个byte类型的数组，用于存放接收到得数据
-					DatagramPacket receivePack = new DatagramPacket(receive, receive.length);// 创建一个DatagramPacket对象，并指定DatagramPacket对象的大小和长度
-					socket.receive(receivePack);// 读取接收到得数据
-					System.out.println("OKOKOKOK");
-
-					ArrayList<Byte> data = new ArrayList<Byte>();
-					for (int i = 0; i < receivePack.getLength(); i++) {
-						data.add(receivePack.getData()[i]);
+					while (true) {
+						byte[] receive = new byte[4 * 1024];// 创建一个byte类型的数组，用于存放接收到得数据
+						DatagramPacket receivePack = new DatagramPacket(receive, receive.length);// 创建一个DatagramPacket对象，并指定DatagramPacket对象的大小和长度
+						socket.receive(receivePack);// 读取接收到得数据
+						ArrayList<Byte> data = new ArrayList<Byte>();
+						for (int i = 0; i < receivePack.getLength(); i++) {
+							data.add(receivePack.getData()[i]);
+						}
+						JSONObject temp = new JSONObject();
+						temp.put("IP", receivePack.getAddress().getHostAddress());
+						temp.put("port", receivePack.getPort());
+						temp.put("data", data);
+						result.put(temp);
 					}
-					JSONObject result = new JSONObject();
-					result.put("ip", receivePack.getAddress().getHostAddress());
-					result.put("port", receivePack.getPort());
-					result.put("data", data);
-
-					if (handler != null) {
-						Message message = new Message();
-						message.obj = result;
-						handler.sendMessage(message);
-					}
-					socket.close();
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
+				if (handler != null) {
+					Message message = new Message();
+					message.obj = result;
+					handler.sendMessage(message);
+				}
+				socket.close();
 			}
 		}, 100);
 	}

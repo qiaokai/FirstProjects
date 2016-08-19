@@ -10,6 +10,7 @@ import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.json.JSONObject;
 
 import com.yinghe.wifitest.client.entity.CommandTag;
+import com.yinghe.wifitest.client.entity.ConstantREntity;
 import com.yinghe.wifitest.client.utils.codeutil.BufferCoderFactory;
 
 //import comxg.test.ClientHandler;
@@ -23,12 +24,11 @@ public class HttpUtils {
 	private static IoSession session;
 
 	@SuppressWarnings("deprecation")
-	private HttpUtils(String serverIp, final int port) {
-		lastPort = port;
+	private HttpUtils() {
 		chain.addLast("codec", new ProtocolCodecFilter(new BufferCoderFactory()));
 		connector.setHandler(HttpResponse.getInstance());
 		connector.setConnectTimeout(30);
-		connectFuture = connector.connect(new InetSocketAddress(serverIp, port));
+		connectFuture = connector.connect(new InetSocketAddress(ConstantREntity.serverIp, ConstantREntity.serverPort));
 		// 等待连接成功
 		connectFuture.awaitUninterruptibly();
 
@@ -36,9 +36,9 @@ public class HttpUtils {
 
 	}
 
-	public synchronized static HttpUtils getInstances(String serverIp, int port) {
-		if (null == instance || lastPort != port) {
-			instance = new HttpUtils(serverIp, port);
+	public synchronized static HttpUtils getInstances() {
+		if (null == instance) {
+			instance = new HttpUtils();
 		}
 		return instance;
 	}

@@ -28,7 +28,17 @@
         android:layout_alignRight="@+id/img_Equipment_state"
         android:layout_below="@+id/img_Equipment_state"
         android:gravity="center"
-        android:textColor="@drawable/color_equipment_state_selector"
-        android:text="@string/closed" />
+        android:text="@string/closed"
+        android:textColor="@drawable/color_equipment_state_selector" />
+
+    <TextView
+        android:id="@+id/text_Equipment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_Equipment_state"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="TextView" />
 
 </RelativeLayout>

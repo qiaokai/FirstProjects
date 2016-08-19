@@ -3,13 +3,6 @@ package com.yinghe.wifitest.client.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.wifitest01.R;
-import com.example.wifitest01.R.color;
-import com.yinghe.wifitest.client.adapter.ViewPagerAdapter;
-import com.yinghe.wifitest.client.entity.MsgTag;
-import com.yinghe.wifitest.client.utils.LocationUtil;
-import com.yinghe.wifitest.client.view.PageConnectView;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +12,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.wifitest01.R;
+import com.example.wifitest01.R.color;
+import com.yinghe.wifitest.client.adapter.ViewPagerAdapter;
+import com.yinghe.wifitest.client.entity.MsgTag;
+import com.yinghe.wifitest.client.view.PageConnectView;
 
 public class MainFragmentActivity extends Activity implements View.OnClickListener {
 
@@ -42,6 +41,7 @@ public class MainFragmentActivity extends Activity implements View.OnClickListen
 	private TextView textTitleFind;
 	private TextView textTitleUser;
 
+	@SuppressLint("InflateParams")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
