@@ -1,14 +1,19 @@
 package com.yinghe.wifitest.client.manager;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.os.Handler;
+import android.os.Message;
 
 import com.yinghe.wifitest.client.entity.EquipmentInfo;
 import com.yinghe.wifitest.client.entity.EquipmentListInfo;
+import com.yinghe.wifitest.client.entity.MsgTag;
+import com.yinghe.wifitest.client.entity.TempEquipmentIpList;
 
 public class EquipmentManager {
 
@@ -20,10 +25,34 @@ public class EquipmentManager {
 		CommandManager.getEquipmentIp(handler);
 	}
 
-	public static void buildTCPConnect(ArrayList<String> IpList) {
+	public static void buildTCPConnect(final ArrayList<String> IpList, final Handler handler) {
 		for (String IP : IpList) {
 			CommandManager.buildTCPConnect(IP);
 		}
+		if (handler != null) {
+			new Timer().schedule(new TimerTask() {
+				@Override
+				public void run() {
+					Message message = new Message();
+					message.what = MsgTag.buildTCPConnect;
+					message.arg1 = MsgTag.success;
+					message.obj = IpList;
+					handler.sendMessage(message);
+				}
+			}, 3000);
+		}
+	}
+
+	public static void checkTCPConnect(Handler handler) {
+		for (String IP : TempEquipmentIpList.Instance()) {
+			CommandManager.testTCPConnect(IP, new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					super.handleMessage(msg);
+				}
+			});
+		}
+
 	}
 
 	public static ArrayList<String> removeSameIp(JSONArray input) {
@@ -56,4 +85,13 @@ public class EquipmentManager {
 			EquipmentListInfo.Instance().add(temp);
 		}
 	}
+
+	public static void updateTempEquipmentIplist(ArrayList<String> IpList) {
+		for (String IP : IpList) {
+			if (!TempEquipmentIpList.Instance().contains(IP)) {
+				TempEquipmentIpList.Instance().add(IP);
+			}
+		}
+	}
+
 }

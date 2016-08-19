@@ -11,22 +11,9 @@
         android:layout_alignLeft="@+id/text_testTCPConnect"
         android:layout_below="@+id/text_testTCPConnect"
         android:layout_marginTop="20dp"
-        android:background="@drawable/img_course_setting_normal"
+        android:background="@drawable/img_course_setting_selector"
         android:gravity="center"
         android:text="@string/waitConnectSuccess"
-        android:textColor="@color/lawngreen"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/text_buildTCPConnect"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/text_searchEquipment"
-        android:layout_below="@+id/text_searchEquipment"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/img_course_setting_normal"
-        android:gravity="center"
-        android:text="@string/buildTCPConnect"
         android:textColor="@color/lawngreen"
         android:textSize="25sp" />
 
@@ -37,7 +24,7 @@
         android:layout_alignLeft="@+id/text_buildTCPConnect"
         android:layout_below="@+id/text_buildTCPConnect"
         android:layout_marginTop="20dp"
-        android:background="@drawable/img_course_setting_normal"
+        android:background="@drawable/img_course_setting_selector"
         android:gravity="center"
         android:text="@string/testTCPConnect"
         android:textColor="@color/lawngreen"
@@ -50,9 +37,35 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:background="@drawable/img_course_setting_normal"
+        android:background="@drawable/img_course_setting_selector"
         android:gravity="center"
         android:text="@string/searchEquipment"
+        android:textColor="@color/lawngreen"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_checkTCPConnect"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_buildTCPConnect"
+        android:layout_below="@+id/text_searchEquipment"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_course_setting_selector"
+        android:gravity="center"
+        android:text="@string/checkTCPConnect"
+        android:textColor="@color/lawngreen"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_buildTCPConnect"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_searchEquipment"
+        android:layout_below="@+id/text_checkTCPConnect"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_course_setting_selector"
+        android:gravity="center"
+        android:text="@string/buildTCPConnect"
         android:textColor="@color/lawngreen"
         android:textSize="25sp" />
 

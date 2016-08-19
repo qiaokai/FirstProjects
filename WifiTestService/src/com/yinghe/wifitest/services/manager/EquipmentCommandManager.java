@@ -13,11 +13,17 @@ public class EquipmentCommandManager {
 
 	public static void execute(IoSession session, Object message) {
 		try {
+			System.out.println("OKOKOKOKOK");
+			System.out.println(session.getAttribute("IP") == null);
+			if (session.getAttribute("IP") == null) {
+				return;
+			}
 			String clientIp = session.getAttribute("IP").toString();
 			String commad = session.getAttribute("command").toString();
 
 			IoSession clientSession = getClientSession(clientIp);
 			if (clientSession != null) {
+				System.out.println(clientSession.isClosing());
 				String data = getData(commad, (byte[]) message);
 				JSONObject result = new JSONObject();
 				result.put("IP", session.getRemoteAddress().toString());
@@ -50,17 +56,17 @@ public class EquipmentCommandManager {
 	private static String getData(String commad, byte[] message) {
 		String result = "";
 		switch (commad) {
-			case CommandTag.getEquipmentId:
-				result = DLT645_2007Utils.parseEquipmentId(message);
-				break;
-			case CommandTag.openEquipment:
-				break;
-			case CommandTag.closeEquipmentId:
-				break;
-			case CommandTag.getCurrentVoltage:
-				break;
-			default:
-				break;
+		case CommandTag.getEquipmentId:
+			result = DLT645_2007Utils.parseEquipmentId(message);
+			break;
+		case CommandTag.openEquipment:
+			break;
+		case CommandTag.closeEquipmentId:
+			break;
+		case CommandTag.getCurrentVoltage:
+			break;
+		default:
+			break;
 		}
 		return result;
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.example.wifitest01.R;
 import com.yinghe.wifitest.client.activity.CityChooseActivity;
 import com.yinghe.wifitest.client.activity.EquipmentInfoActivity;
+import com.yinghe.wifitest.client.activity.EquipmentSetActivity;
 import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
 import com.yinghe.wifitest.client.entity.HotCityInfo;
@@ -75,8 +76,7 @@ public class PageConnectView {
 
 			@Override
 			public void onClick(View v) {
-				EquipmentManager.searchEquipment(handler);
-
+				mActivity.startActivity(new Intent(mActivity, EquipmentSetActivity.class));
 			}
 		});
 

@@ -1,22 +1,21 @@
 package com.yinghe.wifitest.client.manager;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Handler;
-import android.os.Message;
-
 import com.yinghe.wifitest.client.entity.CommandInfo;
+import com.yinghe.wifitest.client.entity.CommandTag;
 import com.yinghe.wifitest.client.entity.ConstantREntity;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.utils.DLT645_2007Utils;
-import com.yinghe.wifitest.client.utils.HttpUtils;
+import com.yinghe.wifitest.client.utils.DigitalUtils;
+import com.yinghe.wifitest.client.utils.MinaUtils;
 import com.yinghe.wifitest.client.utils.SocketUtils;
+
+import android.os.Handler;
+import android.os.Message;
 
 public class CommandManager {
 
@@ -25,8 +24,7 @@ public class CommandManager {
 			@Override
 			public void handleMessage(Message msg) {
 				ArrayList<String> result = EquipmentManager.removeSameIp((JSONArray) msg.obj);
-				EquipmentManager.updateEquilMentList(result);
-				EquipmentManager.buildTCPConnect(result);
+				EquipmentManager.updateTempEquipmentIplist(result);
 				Message message = new Message();
 				message.what = MsgTag.GetEquipmentIp;
 				if (result.size() > 0) {
@@ -34,24 +32,34 @@ public class CommandManager {
 				} else {
 					message.arg1 = MsgTag.fail;
 				}
-				message.obj = result;
 				handler.sendMessage(message);
 			}
 		});
 	}
 
 	public static void buildTCPConnect(String equipmentIp) {
-		String temp = "AT+NETP=TCP,CLIENT," + ConstantREntity.serverPort + "," + ConstantREntity.serverIp;
+		String temp = "AT+NETP=TCP,CLIENT," + ConstantREntity.equipmentServerPort + "," + ConstantREntity.serverIp;
 		byte[] input = DLT645_2007Utils.getDltCode(temp);
+		System.out.println(temp);
+		System.out.println(DigitalUtils.getHexStringByBytes(input));
 		SocketUtils.sendMsgWithUDPSocket(equipmentIp, ConstantREntity.initialPort, 8080, input, null);
 	}
 
-	public static void testTCPConnect(Handler handler) {
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				HttpUtils.getInstances().getEquipmentId();
-			}
-		}, 10);
+	public static void testTCPConnect(final String iP, Handler handler) {
+		try {
+			JSONObject info = new JSONObject();
+			info.put("IP", iP);
+			info.put("command", CommandTag.getEquipmentId);
+
+			MinaUtils.sendMessageWithMina(info.toString(), new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					System.out.println(msg.obj.toString());
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }

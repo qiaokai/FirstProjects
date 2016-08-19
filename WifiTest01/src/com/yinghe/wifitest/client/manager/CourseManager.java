@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.utils.DLT645_2007Utils;
 import com.yinghe.wifitest.client.utils.DigitalUtils;
-import com.yinghe.wifitest.client.utils.HttpUtils;
+import com.yinghe.wifitest.client.utils.MinaUtils;
 import com.yinghe.wifitest.client.utils.SocketUtils;
 
 import android.os.Handler;
@@ -94,7 +94,7 @@ public class CourseManager {
 
 			@Override
 			public void run() {
-				HttpUtils.getInstances().getEquipmentId();
+//				HttpUtils.getInstances().getEquipmentId();
 			}
 		}, 10);
 

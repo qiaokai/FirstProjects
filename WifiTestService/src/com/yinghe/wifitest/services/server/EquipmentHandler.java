@@ -22,23 +22,7 @@ public class EquipmentHandler implements IoHandler {
 
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
-		System.out.println("equipment: " + session.getRemoteAddress().toString() + ":   " + message.toString());
-		System.out.println("equipment: " + session.getAttribute("command"));
-		System.out.println("equipment: " + session.getAttribute("IP"));
 		EquipmentCommandManager.execute(session, message);
-		//		String result = CommandManager.getResult(session,message.toString());
-
-		//		session.write(result);
-		// JSONObject temp=(JSONObject) message;
-
-		// System.out.println(temp.toString());
-		// String msg=message.toString();
-		// ArrayList<String> temp=(ArrayList<String>) message;
-		// System.out.println(temp.get(index));
-		//
-		//
-		//// String
-		//		session.write("fuck you too.");
 	}
 
 	@Override

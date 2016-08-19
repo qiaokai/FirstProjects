@@ -13,15 +13,18 @@ public class ClientCommandManager {
 
 	public static void execute(IoSession session, String string) {
 		try {
+			session.resumeWrite();
 			JSONObject info = new JSONObject(string);
 			String equipmentIp = info.getString("IP");
 			String commad = info.getString("command");
 
 			IoSession equipmentSession = getEquipmentSession(equipmentIp);
 			if (equipmentSession != null) {
+				System.out.println("0000");
 				if (equipmentSession.getAttribute("IP") == null) {
 					equipmentSession.setAttribute("command", commad);
 					equipmentSession.setAttribute("IP", session.getRemoteAddress().toString());
+					System.out.println("ip:"+equipmentSession.getAttribute("IP"));
 					byte[] commandInfo = getConamdInfo(info);
 					equipmentSession.write(commandInfo);
 				} else {
