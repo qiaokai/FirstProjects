@@ -2,9 +2,6 @@ package com.yinghe.wifitest.services.utils;
 
 import java.util.ArrayList;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class DLT645_2007Utils {
 
 	private final static byte[] site = new byte[] { (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA };
@@ -113,7 +110,6 @@ public class DLT645_2007Utils {
 	 * @param message
 	 * @param handler
 	 */
-	@SuppressWarnings("unchecked")
 	public static String parseEquipmentId(byte[] message) {
 		String result = null;
 		byte[] temp = getDataFromDLTResponse(message);
@@ -121,35 +117,23 @@ public class DLT645_2007Utils {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static String parseEquipmentVoltage(JSONObject response) {
+	public static String parseEquipmentVoltage(byte[] message) {
 		String result = null;
-//		try {
-//			ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
-//			byte[] temp = getDataFromDLTResponse(data);
-//			String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
-//			String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
-//			result = Integer.parseInt(temp2) * 10 + Integer.parseInt(temp1) / 10f + "V";
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
+		byte[] temp = getDataFromDLTResponse(message);
+		String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+		String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+		result = Integer.parseInt(temp2) * 10 + Integer.parseInt(temp1) / 10f + "V";
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static String parseEquipmentElectric(JSONObject response) {
+	public static String parseEquipmentElectric(byte[] message) {
 		String electric = null;
-//		try {
-//			ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
-//			byte[] temp = getDataFromDLTResponse(data);
-//			String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
-//			String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
-//			String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
-//			String result = temp3 + temp2 + temp1;
-//			electric = Integer.parseInt(result) / 1000f + "A";
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
+		byte[] temp = getDataFromDLTResponse(message);
+		String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+		String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+		String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
+		String result = temp3 + temp2 + temp1;
+		electric = Integer.parseInt(result) / 1000f + "A";
 		return electric;
 	}
 }

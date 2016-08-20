@@ -8,6 +8,7 @@ import com.yinghe.wifitest.client.activity.EquipmentInfoActivity;
 import com.yinghe.wifitest.client.activity.EquipmentSetActivity;
 import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
+import com.yinghe.wifitest.client.entity.EquipmentList;
 import com.yinghe.wifitest.client.entity.HotCityInfo;
 import com.yinghe.wifitest.client.entity.LocationInfo;
 import com.yinghe.wifitest.client.entity.MsgTag;
@@ -60,13 +61,15 @@ public class PageConnectView {
 
 		list_Equipment = (ListView) view.findViewById(R.id.list_Equipment);
 
-		EquipmentListAdapter adapter = new EquipmentListAdapter(mActivity, HotCityInfo.Instance());
+		EquipmentListAdapter adapter = new EquipmentListAdapter(mActivity);
 		list_Equipment.setAdapter(adapter);
 		list_Equipment.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mActivity.startActivity(new Intent(mActivity, EquipmentInfoActivity.class));
+				Intent intent = new Intent(mActivity, EquipmentInfoActivity.class);
+				intent.putExtra("posion", position);
+				mActivity.startActivity(intent);
 
 			}
 		});

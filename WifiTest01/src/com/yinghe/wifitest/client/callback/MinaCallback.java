@@ -6,6 +6,8 @@ import org.apache.mina.core.session.IoSession;
 import android.os.Handler;
 import android.os.Message;
 
+import com.yinghe.wifitest.client.entity.MsgTag;
+
 public class MinaCallback extends IoHandlerAdapter {
 
 	private Handler handler;
@@ -18,6 +20,7 @@ public class MinaCallback extends IoHandlerAdapter {
 	public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
 		if (handler != null) {
 			Message msg = new Message();
+			msg.arg1 = MsgTag.fail;
 			msg.obj = "out time";
 			handler.sendMessage(msg);
 		}
@@ -26,9 +29,11 @@ public class MinaCallback extends IoHandlerAdapter {
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		super.messageReceived(session, message);
+
 		if (handler != null) {
 			Message msg = new Message();
-			msg.obj = message;
+			msg.arg1 = MsgTag.success;
+			msg.obj = message.toString();
 			handler.sendMessage(msg);
 		}
 

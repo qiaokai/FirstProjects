@@ -30,7 +30,7 @@
             android:layout_above="@+id/textMagin"
             android:layout_centerHorizontal="true"
             android:background="@drawable/btn_enter_scenes_selector"
-            android:text="进入智能场景"
+            android:text="添加设备"
             android:textColor="@drawable/color_city_list_item_selector"
             android:textSize="14sp" />
 

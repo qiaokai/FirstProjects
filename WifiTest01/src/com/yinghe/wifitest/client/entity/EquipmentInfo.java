@@ -2,11 +2,11 @@ package com.yinghe.wifitest.client.entity;
 
 public class EquipmentInfo {
 	private String IP;// 当前IP
-	private String equipmentId;// 设备编号
-	private String equipmentName;// 设备名称
-	private String equipmentState;// 设备状态
-	private String currentVoltage;// 当前设备电压
-	private String currentElectricity;// 当前设备电流
+	private String Id;// 设备编号
+	private String Name;// 设备名称
+	private String State;// 设备状态
+	private String Voltage;// 当前设备电压
+	private String Electricity;// 当前设备电流
 	private int lastElectricQuantity;// 上次电量
 	private int currentElectricQuantity;// 当前电量
 	private int maxElectricQuantity;// 最大电量
@@ -20,44 +20,44 @@ public class EquipmentInfo {
 		IP = iP;
 	}
 
-	public String getEquipmentId() {
-		return equipmentId;
+	public String getId() {
+		return Id;
 	}
 
-	public void setEquipmentId(String equipmentId) {
-		this.equipmentId = equipmentId;
+	public void setId(String id) {
+		Id = id;
 	}
 
-	public String getEquipmentName() {
-		return equipmentName;
+	public String getName() {
+		return Name;
 	}
 
-	public void setEquipmentName(String equipmentName) {
-		this.equipmentName = equipmentName;
+	public void setName(String name) {
+		Name = name;
 	}
 
-	public String getEquipmentState() {
-		return equipmentState;
+	public String getState() {
+		return State;
 	}
 
-	public void setEquipmentState(String equipmentState) {
-		this.equipmentState = equipmentState;
+	public void setState(String state) {
+		State = state;
 	}
 
-	public String getCurrentVoltage() {
-		return currentVoltage;
+	public String getVoltage() {
+		return Voltage;
 	}
 
-	public void setCurrentVoltage(String currentVoltage) {
-		this.currentVoltage = currentVoltage;
+	public void setVoltage(String voltage) {
+		Voltage = voltage;
 	}
 
-	public String getCurrentElectricity() {
-		return currentElectricity;
+	public String getElectricity() {
+		return Electricity;
 	}
 
-	public void setCurrentElectricity(String currentElectricity) {
-		this.currentElectricity = currentElectricity;
+	public void setElectricity(String electricity) {
+		Electricity = electricity;
 	}
 
 	public int getLastElectricQuantity() {

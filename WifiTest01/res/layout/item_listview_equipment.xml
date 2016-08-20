@@ -32,7 +32,7 @@
         android:textColor="@drawable/color_equipment_state_selector" />
 
     <TextView
-        android:id="@+id/text_Equipment_name"
+        android:id="@+id/text_Equipment_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/text_Equipment_state"

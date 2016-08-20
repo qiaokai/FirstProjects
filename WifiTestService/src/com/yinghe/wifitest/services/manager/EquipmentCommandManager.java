@@ -13,8 +13,7 @@ public class EquipmentCommandManager {
 
 	public static void execute(IoSession session, Object message) {
 		try {
-			System.out.println("OKOKOKOKOK");
-			System.out.println(session.getAttribute("IP") == null);
+			JSONObject result = new JSONObject();
 			if (session.getAttribute("IP") == null) {
 				return;
 			}
@@ -23,18 +22,15 @@ public class EquipmentCommandManager {
 
 			IoSession clientSession = getClientSession(clientIp);
 			if (clientSession != null) {
-				System.out.println(clientSession.isClosing());
 				String data = getData(commad, (byte[]) message);
-				JSONObject result = new JSONObject();
-				result.put("IP", session.getRemoteAddress().toString());
+				String IP = session.getRemoteAddress().toString().replaceAll("/", "").split(":")[0];
+				result.put("state", "success");
+				result.put("IP", IP);
 				result.put("command", commad);
 				result.put("data", data);
 				clientSession.write(result.toString());
 				session.removeAttribute("IP");
-			} else {
-				session.write("equipmentIs not connected");
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,17 +52,22 @@ public class EquipmentCommandManager {
 	private static String getData(String commad, byte[] message) {
 		String result = "";
 		switch (commad) {
-		case CommandTag.getEquipmentId:
-			result = DLT645_2007Utils.parseEquipmentId(message);
-			break;
-		case CommandTag.openEquipment:
-			break;
-		case CommandTag.closeEquipmentId:
-			break;
-		case CommandTag.getCurrentVoltage:
-			break;
-		default:
-			break;
+			case CommandTag.getEquipmentId:
+				result = DLT645_2007Utils.parseEquipmentId(message);
+				break;
+			case CommandTag.openEquipment:
+				//				result = DLT645_2007Utils.parseEquipmentVoltage(message);
+				break;
+			case CommandTag.closeEquipment:
+				break;
+			case CommandTag.getCurrentVoltage:
+				result = DLT645_2007Utils.parseEquipmentVoltage(message);
+				break;
+			case CommandTag.getCurrentElectric:
+				result = DLT645_2007Utils.parseEquipmentElectric(message);
+				break;
+			default:
+				break;
 		}
 		return result;
 	}

@@ -16,6 +16,9 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.yinghe.wifitest.client.entity.MsgTag;
+
+import android.R.bool;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
@@ -94,8 +97,8 @@ public class SocketUtils {
 			@SuppressLint("NewApi")
 			@Override
 			public void run() {
-				JSONArray result = new JSONArray();
 				DatagramSocket socket = null;
+				boolean flag = true;
 				try {
 					if (socket == null) {
 						socket = new DatagramSocket(null);
@@ -118,14 +121,18 @@ public class SocketUtils {
 						temp.put("IP", receivePack.getAddress().getHostAddress());
 						temp.put("port", receivePack.getPort());
 						temp.put("data", data);
-						result.put(temp);
+						if (handler != null) {
+							Message message = new Message();
+							message.what = MsgTag.success;
+							message.obj = temp;
+							handler.sendMessage(message);
+							flag = false;
+						}
 					}
 				} catch (Exception e) {
 				}
-				if (handler != null) {
-					Message message = new Message();
-					message.obj = result;
-					handler.sendMessage(message);
+				if (handler != null && flag) {
+					handler.sendEmptyMessage(MsgTag.fail);
 				}
 				socket.close();
 			}
