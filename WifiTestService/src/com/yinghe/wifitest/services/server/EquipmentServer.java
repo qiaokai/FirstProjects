@@ -14,14 +14,14 @@ import com.yinghe.wifitest.services.utils.EquipmentCoderFactory;
 
 public class EquipmentServer {
 	private static NioSocketAcceptor acceptor;
-	private final int serverPort = 8087;
+	private final int serverPort = 8089;
 
 	private static EquipmentServer instanse = null;
 
 	private EquipmentServer() {
 		acceptor = new NioSocketAcceptor();
 		acceptor.setReuseAddress(true);
-		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10); // 读写通道10秒内无操作进入空闲状态   
+		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 1); // 读写通道10秒内无操作进入空闲状态
 		acceptor.setHandler(new EquipmentHandler());
 
 		DefaultIoFilterChainBuilder chain = acceptor.getFilterChain(); // 设置过滤器

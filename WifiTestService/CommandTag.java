@@ -1,4 +1,4 @@
-package com.yinghe.wifitest.services;
+
 
 public class CommandTag {
 	public static final String getEquipmentId = "getEquipmentId";

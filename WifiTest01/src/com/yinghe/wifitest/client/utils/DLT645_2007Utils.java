@@ -5,11 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.yinghe.wifitest.client.entity.MsgTag;
-
-import android.os.Handler;
-import android.os.Message;
-
 public class DLT645_2007Utils {
 
 	private final static byte[] site = new byte[] { (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA };
@@ -134,55 +129,58 @@ public class DLT645_2007Utils {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static void parseEquipmentVoltage(JSONObject response, Handler handler) {
-		if (handler != null) {
-			String result = null;
-			Message message = new Message();
-			message.what = MsgTag.Msg_GetEquipmentVoltage;
-			try {
-				// String ip = response.getString("IP");
-				ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
-				byte[] temp = getDataFromDLTResponse(data);
-				String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
-				String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
-				result = Integer.parseInt(temp2) * 10 + Integer.parseInt(temp1) / 10f + "V";
-				message.arg1 = MsgTag.success;
-				message.obj = result;
-				handler.sendMessage(message);
-				return;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			message.arg1 = MsgTag.fail;
-			handler.sendMessage(message);
-		}
-	}
+	// @SuppressWarnings("unchecked")
+	// public static void parseEquipmentVoltage(JSONObject response, Handler
+	// handler) {
+	// if (handler != null) {
+	// String result = null;
+	// Message message = new Message();
+	// message.what = MsgTag.Msg_GetEquipmentVoltage;
+	// try {
+	// // String ip = response.getString("IP");
+	// ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
+	// byte[] temp = getDataFromDLTResponse(data);
+	// String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+	// String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+	// result = Integer.parseInt(temp2) * 10 + Integer.parseInt(temp1) / 10f +
+	// "V";
+	// message.arg1 = MsgTag.success;
+	// message.obj = result;
+	// handler.sendMessage(message);
+	// return;
+	// } catch (JSONException e) {
+	// e.printStackTrace();
+	// }
+	// message.arg1 = MsgTag.fail;
+	// handler.sendMessage(message);
+	// }
+	// }
 
-	@SuppressWarnings("unchecked")
-	public static void parseEquipmentElectric(JSONObject response, Handler handler) {
-		if (handler != null) {
-			String electric = null;
-			Message message = new Message();
-			message.what = MsgTag.Msg_GetEquipmentElectric;
-			try {
-				ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
-				byte[] temp = getDataFromDLTResponse(data);
-				String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
-				String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
-				String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
-				String result = temp3 + temp2 + temp1;
-				electric = Integer.parseInt(result) / 1000f + "A";
-
-				message.arg1 = MsgTag.success;
-				message.obj = electric;
-				handler.sendMessage(message);
-				return;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			message.arg1 = MsgTag.fail;
-			handler.sendMessage(message);
-		}
-	}
+	// @SuppressWarnings("unchecked")
+	// public static void parseEquipmentElectric(JSONObject response, Handler
+	// handler) {
+	// if (handler != null) {
+	// String electric = null;
+	// Message message = new Message();
+	// message.what = MsgTag.Msg_GetEquipmentElectric;
+	// try {
+	// ArrayList<Byte> data = (ArrayList<Byte>) response.get("data");
+	// byte[] temp = getDataFromDLTResponse(data);
+	// String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+	// String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+	// String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
+	// String result = temp3 + temp2 + temp1;
+	// electric = Integer.parseInt(result) / 1000f + "A";
+	//
+	// message.arg1 = MsgTag.success;
+	// message.obj = electric;
+	// handler.sendMessage(message);
+	// return;
+	// } catch (JSONException e) {
+	// e.printStackTrace();
+	// }
+	// message.arg1 = MsgTag.fail;
+	// handler.sendMessage(message);
+	// }
+	// }
 }

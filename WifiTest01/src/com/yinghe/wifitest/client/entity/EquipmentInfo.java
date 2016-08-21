@@ -1,16 +1,21 @@
 package com.yinghe.wifitest.client.entity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class EquipmentInfo {
 	private String IP;// 当前IP
 	private String Id;// 设备编号
-	private String Name;// 设备名称
-	private String State;// 设备状态
+	private String Name = "WIFI智能电表";// 设备名称
+	private boolean IsOpened = false;// 设备状态
 	private String Voltage;// 当前设备电压
-	private String Electricity;// 当前设备电流
-	private int lastElectricQuantity;// 上次电量
-	private int currentElectricQuantity;// 当前电量
-	private int maxElectricQuantity;// 最大电量
-	private int availableQuantity;// 可用电量
+	private String Electricity = "0.0 A";// 当前设备电流
+	private String lastQuantity;// 上次电量
+	private String currentQuantity;// 当前电量
+
+	public EquipmentInfo() {
+		super();
+	}
 
 	public String getIP() {
 		return IP;
@@ -36,12 +41,12 @@ public class EquipmentInfo {
 		Name = name;
 	}
 
-	public String getState() {
-		return State;
+	public boolean IsOpened() {
+		return IsOpened;
 	}
 
-	public void setState(String state) {
-		State = state;
+	public void IsOpened(boolean state) {
+		IsOpened = state;
 	}
 
 	public String getVoltage() {
@@ -60,36 +65,62 @@ public class EquipmentInfo {
 		Electricity = electricity;
 	}
 
-	public int getLastElectricQuantity() {
-		return lastElectricQuantity;
+	public String getLastQuantity() {
+		return lastQuantity;
 	}
 
-	public void setLastElectricQuantity(int lastElectricQuantity) {
-		this.lastElectricQuantity = lastElectricQuantity;
+	public void setLastQuantity(String lastQuantity) {
+		this.lastQuantity = lastQuantity;
 	}
 
-	public int getCurrentElectricQuantity() {
-		return currentElectricQuantity;
+	public String getCurrentQuantity() {
+		return currentQuantity;
 	}
 
-	public void setCurrentElectricQuantity(int currentElectricQuantity) {
-		this.currentElectricQuantity = currentElectricQuantity;
+	public void setCurrentQuantity(String currentQuantity) {
+		this.currentQuantity = currentQuantity;
 	}
 
-	public int getMaxElectricQuantity() {
-		return maxElectricQuantity;
+	public EquipmentInfo(String jsonString) {
+		try {
+			JSONObject input = new JSONObject(jsonString);
+			if (!input.isNull("IP"))
+				IP = input.getString("IP");
+			if (!input.isNull("Id"))
+				Id = input.getString("Id");
+			if (!input.isNull("Name"))
+				Name = input.getString("Name");
+			if (!input.isNull("State"))
+				IsOpened = input.getBoolean("State");
+			if (!input.isNull("Voltage"))
+				Voltage = input.getString("Voltage");
+			if (!input.isNull("Electricity"))
+				Electricity = input.getString("Electricity");
+			if (!input.isNull("lastQuantity"))
+				lastQuantity = input.getString("lastQuantity");
+			if (!input.isNull("currentQuantity"))
+				currentQuantity = input.getString("currentQuantity");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	public void setMaxElectricQuantity(int maxElectricQuantity) {
-		this.maxElectricQuantity = maxElectricQuantity;
+	@Override
+	public String toString() {
+		JSONObject result = new JSONObject();
+		try {
+			result.put("IP", IP);
+			result.put("Id", Id);
+			result.put("Name", Name);
+			result.put("State", IsOpened);
+			result.put("Voltage", Voltage);
+			result.put("Electricity", Electricity);
+			result.put("lastQuantity", lastQuantity);
+			result.put("currentQuantity", currentQuantity);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return result.toString();
 	}
-
-	public int getAvailableQuantity() {
-		return availableQuantity;
-	}
-
-	public void setAvailableQuantity(int availableQuantity) {
-		this.availableQuantity = availableQuantity;
-	}
-
 }

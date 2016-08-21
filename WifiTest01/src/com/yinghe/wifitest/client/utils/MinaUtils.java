@@ -10,7 +10,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import com.yinghe.wifitest.client.callback.MinaCallback;
-import com.yinghe.wifitest.client.entity.ConstantREntity;
+import com.yinghe.wifitest.client.entity.ConstantEntity;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.utils.codeutil.BufferCoderFactory;
 
@@ -27,7 +27,7 @@ public class MinaUtils {
 				connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new BufferCoderFactory()));
 				connector.setHandler(new MinaCallback(handler));
 
-				ConnectFuture connectFuture = connector.connect(new InetSocketAddress(ConstantREntity.serverIp, ConstantREntity.serverPort));
+				ConnectFuture connectFuture = connector.connect(new InetSocketAddress(ConstantEntity.serverIp, ConstantEntity.serverPort));
 				connectFuture.awaitUninterruptibly();// 等待连接成功
 				if (connectFuture.isConnected()) {
 					IoSession session = connectFuture.getSession();

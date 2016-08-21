@@ -1,5 +1,11 @@
 package com.yinghe.wifitest.client.activity;
 
+import com.example.wifitest01.R;
+import com.yinghe.wifitest.client.callback.YHLog;
+import com.yinghe.wifitest.client.entity.MsgTag;
+import com.yinghe.wifitest.client.entity.TempEquipmentIpList;
+import com.yinghe.wifitest.client.manager.EquipmentManager;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,10 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.wifitest01.R;
-import com.yinghe.wifitest.client.entity.MsgTag;
-import com.yinghe.wifitest.client.entity.TempEquipmentIpList;
-import com.yinghe.wifitest.client.manager.EquipmentManager;
 
 public class EquipmentSetActivity extends Activity implements OnClickListener {
 
@@ -22,6 +24,9 @@ public class EquipmentSetActivity extends Activity implements OnClickListener {
 	TextView buildTCPConnect;
 	TextView testTCPConnect;
 	TextView waitConnectSuccess;
+
+	int count = 0;
+	boolean isEmpty = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,34 +62,37 @@ public class EquipmentSetActivity extends Activity implements OnClickListener {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-			case MsgTag.GetEquipmentIp:
+			case MsgTag.searchEquipment:
 				String equipmentIp = (String) msg.obj;
+				// String equipmentIp = "192.168.1.103";
+				YHLog.d("received in searchEquipment. IP is " + equipmentIp);
 				if (msg.arg1 == MsgTag.success) {
 					searchEquipment.setSelected(true);
 					checkTCPConnect.setEnabled(true);
-					checkTCPConnect.setSelected(true);
+					isEmpty = false;
 					EquipmentManager.checkTCPConnect(equipmentIp, handler);
-				} else {
+				} else if (isEmpty) {
 					Toast.makeText(getApplicationContext(), "未搜索到新增设备", Toast.LENGTH_SHORT).show();
+					closeView();
 				}
 				break;
 			case MsgTag.checkTCPConnect:
+				checkTCPConnect.setSelected(true);
 				String checkedIp = (String) msg.obj;
+				YHLog.d("received in checkTCPConnect. IP is " + checkedIp);
 				if (msg.arg1 == MsgTag.success) {
 					TempEquipmentIpList.Instance().remove(checkedIp);
-					EquipmentManager.addEquipment(checkedIp);
-					if (TempEquipmentIpList.Instance().isEmpty()) {
-						buildTCPConnect.setSelected(true);
-						testTCPConnect.setSelected(true);
-						waitConnectSuccess.setSelected(true);
-						finish();
-					}
+					buildTCPConnect.setSelected(true);
+					testTCPConnect.setSelected(true);
+					waitConnectSuccess.setSelected(true);
+					closeView();
 				} else if (!TextUtils.isEmpty(checkedIp)) {
 					buildTCPConnect.setEnabled(true);
 					EquipmentManager.buildTCPConnect(checkedIp, handler);
 				}
 				break;
 			case MsgTag.buildTCPConnect:
+				YHLog.d("received in buildTCPConnect");
 				buildTCPConnect.setSelected(true);
 				if (msg.arg1 == MsgTag.success) {
 					testTCPConnect.setEnabled(true);
@@ -92,30 +100,33 @@ public class EquipmentSetActivity extends Activity implements OnClickListener {
 				}
 				break;
 			case MsgTag.testTCPConnect:
-				String testedIp = msg.obj.toString();
+				YHLog.d("received in testTCPConnect");
+				String testedIp = (String) msg.obj;
 				buildTCPConnect.setSelected(true);
 				testTCPConnect.setSelected(true);
 				waitConnectSuccess.setEnabled(true);
 				if (msg.arg1 == MsgTag.success) {
 					waitConnectSuccess.setSelected(true);
+					System.out.println("testedIp: " + testedIp);
+					System.out.println(TempEquipmentIpList.Instance().toString());
 					TempEquipmentIpList.Instance().remove(testedIp);
-					EquipmentManager.addEquipment(testedIp);
 					if (TempEquipmentIpList.Instance().isEmpty()) {
-						finish();
+						closeView();
 					}
-				} else {
-					for (int i = 0; i < 3; i++) {
-						try {
-							new Thread().sleep(1000);
-							for (String IP : TempEquipmentIpList.Instance()) {
-								EquipmentManager.testTcpConnect(IP, handler);
-							}
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					finish();
 				}
+				try {
+					new Thread().sleep(1000);
+					for (String IP : TempEquipmentIpList.Instance()) {
+						EquipmentManager.testTcpConnect(IP, handler);
+					}
+					count++;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (count >= 3) {
+					closeView();
+				}
+
 				break;
 			default:
 				Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
@@ -153,6 +164,12 @@ public class EquipmentSetActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+
+	}
+
+	protected void closeView() {
+		EquipmentManager.saveEquipmentList(this);
+		finish();
 
 	}
 }

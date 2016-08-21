@@ -15,8 +15,7 @@ public class ClientServerHandler implements IoHandler {
 
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
-		System.out.println("session opened " + session.getRemoteAddress().toString());
-		// 拿到所有的客户端Session
+		System.out.println("client session opened:" + session.getRemoteAddress().toString());
 
 	}
 
@@ -32,7 +31,7 @@ public class ClientServerHandler implements IoHandler {
 
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
-		System.out.println("sessionClosed " + session.getRemoteAddress().toString());
+		System.out.println("client session Closed " + session.getRemoteAddress().toString());
 	}
 
 	@Override

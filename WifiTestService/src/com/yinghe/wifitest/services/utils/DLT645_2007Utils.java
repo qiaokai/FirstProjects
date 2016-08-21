@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class DLT645_2007Utils {
 
-	private final static byte[] site = new byte[] { (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA };
+	private final static byte[] site = new byte[] { (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA,
+			(byte) 0xAA };
 	private final static byte[] orderTag = new byte[] { 0x11, 0x11, 0x11, 0x11 };
 	private final static byte ctrl = 0x0c;
 
@@ -17,6 +18,16 @@ public class DLT645_2007Utils {
 	public static byte[] getDltCode(String order) {
 		byte[] data = DigitalUtils.getHexBytes(order);
 		return DLT645_2007Utils.getDltCodeByHexByte(site, ctrl, orderTag, data);
+	}
+
+	/**
+	 * 
+	 * @param ctrl控制码
+	 * @param order命令码
+	 * @return
+	 */
+	public static byte[] getDltCode(byte ctrl, byte[] order) {
+		return DLT645_2007Utils.getDltCodeByHexByte(site, ctrl, new byte[] {}, order);
 	}
 
 	/**
@@ -119,21 +130,87 @@ public class DLT645_2007Utils {
 
 	public static String parseEquipmentVoltage(byte[] message) {
 		String result = null;
-		byte[] temp = getDataFromDLTResponse(message);
-		String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
-		String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
-		result = Integer.parseInt(temp2) * 10 + Integer.parseInt(temp1) / 10f + "V";
+		try {
+			byte[] temp = getDataFromDLTResponse(message);
+			String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+			String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+			result = Integer.parseInt(temp2) * 10 + Integer.parseInt(temp1) / 10f + "V";
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 
 	public static String parseEquipmentElectric(byte[] message) {
 		String electric = null;
-		byte[] temp = getDataFromDLTResponse(message);
-		String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
-		String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
-		String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
-		String result = temp3 + temp2 + temp1;
-		electric = Integer.parseInt(result) / 1000f + "A";
+		try {
+			byte[] temp = getDataFromDLTResponse(message);
+			String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+			String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+			String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
+			String result = temp3 + temp2 + temp1;
+			electric = Integer.parseInt(result) / 1000f + "A";
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		return electric;
 	}
+
+	public static String parseEquipmentQuantity(byte[] message) {
+		String quantity = null;
+		try {
+			byte[] temp = getDataFromDLTResponse(message);
+			String temp1 = DigitalUtils.getHexStringByByte(temp[4]).trim();
+			String temp2 = DigitalUtils.getHexStringByByte(temp[5]).trim();
+			String temp3 = DigitalUtils.getHexStringByByte(temp[6]).trim();
+			String temp4 = DigitalUtils.getHexStringByByte(temp[6]).trim();
+			String result = temp4 + temp3 + temp2 + temp1;
+			quantity = Integer.parseInt(result) / 100f + "KWH";
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return quantity;
+	}
+
+	public static byte[] getEquipmentIdCommand() {
+		byte[] result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA,
+				(byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68, 0x13, 0x00, (byte) 0xDF, 0x16 };
+		return result;
+	}
+
+	public static byte[] openEquipmentCommand() {
+		byte[] result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA,
+				(byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68, 0x1C, 0x10, 0x37, 0x44, 0x44, 0x44, 0x34,
+				(byte) 0x89, 0x67, 0x45, 0x4E, 0x33, 0x47, 0x77, 0x3B, 0x3A, 0x44, 0x3C, (byte) 0x98, 0x16 };
+		return result;
+	}
+
+	public static byte[] closeEquipmentCommand() {
+		byte[] result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA,
+				(byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68, 0x1C, 0x10, 0x37, 0x44, 0x44, 0x44, 0x34,
+				(byte) 0x89, 0x67, 0x45, 0x4D, 0x33, 0x47, 0x77, 0x3B, 0x3A, 0x44, 0x3C, (byte) 0x97, 0x16 };
+		return result;
+	}
+
+	public static byte[] getCurrentVoltageCommand() {
+		byte ctrl = 0x11;
+		byte[] order = new byte[] { 0x00, 0x01, 0x01, 0x02 };
+		byte[] result = getDltCode(ctrl, order);
+		return result;
+	}
+
+	public static byte[] getCurrentElectricCommand() {
+		byte ctrl = 0x11;
+		byte[] order = new byte[] { 0x00, 0x01, 0x02, 0x02 };
+		byte[] result = getDltCode(ctrl, order);
+		return result;
+	}
+
+	public static byte[] getCurrentQuantityCommand() {
+		byte ctrl = 0x11;
+		byte[] order = new byte[] { 0x00, 0x00, 0x00, 0x00 };
+		byte[] result = getDltCode(ctrl, order);
+		return result;
+	}
+
 }

@@ -1,36 +1,40 @@
 package com.yinghe.wifitest.client.manager;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
-
 import com.yinghe.wifitest.client.entity.CommandInfo;
-import com.yinghe.wifitest.client.entity.ConstantREntity;
+import com.yinghe.wifitest.client.entity.ConstantEntity;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.utils.DLT645_2007Utils;
 import com.yinghe.wifitest.client.utils.MinaUtils;
 import com.yinghe.wifitest.client.utils.SocketUtils;
 
+import android.os.Handler;
+import android.os.Message;
+
 public class CommandManager {
 
 	public static void getEquipmentIp(final Handler handler) {
-		SocketUtils.sendMsgWithUDPSocket(ConstantREntity.initialIp, ConstantREntity.initialPort, 8080, CommandInfo.getEquipmentId, new Handler() {
+		SocketUtils.sendMsgWithUDPSocket(ConstantEntity.initialIp, ConstantEntity.initialPort, 8080, CommandInfo.getEquipmentId, new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				Message message = new Message();
-				message.what = MsgTag.GetEquipmentIp;
-				boolean isError = true;
+				message.what = msg.what;
+				message.arg1 = MsgTag.fail;
 				if (msg.what == MsgTag.success) {
-					String IP = EquipmentManager.updateTempEquipmentIplist(msg);
-					if (!TextUtils.isEmpty(IP)) {
-						message.arg1 = MsgTag.success;
-						message.obj = IP;
-						handler.sendMessage(message);
+					try {
+						JSONObject imput = new JSONObject(msg.obj.toString());
+						if (!imput.isNull("IP")) {
+							String IP = imput.getString("IP");
+							message.arg1 = MsgTag.success;
+							message.obj = IP;
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-				} else if (isError) {
-					message.arg1 = MsgTag.fail;
+				}
+				if (handler != null) {
 					handler.sendMessage(message);
 				}
 			}
@@ -38,9 +42,9 @@ public class CommandManager {
 	}
 
 	public static void buildTCPConnect(String equipmentIp) {
-		String temp = "AT+NETP=TCP,CLIENT," + ConstantREntity.equipmentServerPort + "," + ConstantREntity.serverIp;
+		String temp = "AT+NETP=TCP,CLIENT," + ConstantEntity.equipmentServerPort + "," + ConstantEntity.serverIp;
 		byte[] input = DLT645_2007Utils.getDltCode(temp);
-		SocketUtils.sendMsgWithUDPSocket(equipmentIp, ConstantREntity.initialPort, 8080, input, null);
+		SocketUtils.sendMsgWithUDPSocket(equipmentIp, ConstantEntity.initialPort, 8080, input, null);
 	}
 
 	public static void excute(String ip, String command, Handler handler) {

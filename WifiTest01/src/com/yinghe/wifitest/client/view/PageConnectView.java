@@ -8,8 +8,8 @@ import com.yinghe.wifitest.client.activity.EquipmentInfoActivity;
 import com.yinghe.wifitest.client.activity.EquipmentSetActivity;
 import com.yinghe.wifitest.client.activity.ScanActivity;
 import com.yinghe.wifitest.client.adapter.EquipmentListAdapter;
+import com.yinghe.wifitest.client.entity.EquipmentInfo;
 import com.yinghe.wifitest.client.entity.EquipmentList;
-import com.yinghe.wifitest.client.entity.HotCityInfo;
 import com.yinghe.wifitest.client.entity.LocationInfo;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.entity.WeatherInfo;
@@ -59,10 +59,12 @@ public class PageConnectView {
 			}
 		});
 
+		EquipmentManager.parseEquipmentList(mActivity);
 		list_Equipment = (ListView) view.findViewById(R.id.list_Equipment);
-
-		EquipmentListAdapter adapter = new EquipmentListAdapter(mActivity);
+		ArrayList<EquipmentInfo> list = EquipmentList.Instance();
+		EquipmentListAdapter adapter = new EquipmentListAdapter(mActivity, list);
 		list_Equipment.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 		list_Equipment.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -145,15 +147,14 @@ public class PageConnectView {
 			if (msg.what == MsgTag.Msg_GetWeather && msg.arg1 == MsgTag.success) {
 				updateWeatherPanel();
 			}
-			if (msg.what == MsgTag.GetEquipmentIp && msg.arg1 == MsgTag.success) {
-				ArrayList<String> temp = (ArrayList<String>) msg.obj;
-				for (int i = 0; i < temp.size(); i++) {
-					System.out.println(temp.get(i));
-				}
-			}
 
 		}
 
 	};
+
+	public static void updateEquipmentList() {
+		// EquipmentListAdapter adapter = new EquipmentListAdapter(mActivity);
+		// list_Equipment.setAdapter(adapter);
+	}
 
 }

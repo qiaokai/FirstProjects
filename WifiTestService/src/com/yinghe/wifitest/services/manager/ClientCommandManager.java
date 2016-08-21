@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.yinghe.wifitest.services.CommandTag;
 import com.yinghe.wifitest.services.server.EquipmentServer;
+import com.yinghe.wifitest.services.utils.DLT645_2007Utils;
 import com.yinghe.wifitest.services.utils.DigitalUtils;
 
 public class ClientCommandManager {
@@ -20,49 +21,51 @@ public class ClientCommandManager {
 			String equipmentIp = info.getString("IP");
 			String commad = info.getString("command");
 
+			System.out.println("ClientCommandManager: start to excute. command is " + commad);
 			IoSession equipmentSession = getEquipmentSession(equipmentIp);
 			if (equipmentSession != null) {
-				if (equipmentSession.getAttribute("IP") == null) {
+				if (equipmentSession.isClosing()) {
+					result.put("state", "closed");
+					result.put("IP", equipmentIp);
+					session.write(result.toString());
+					System.out.println("ClientCommandManager: send result to client. resulr is " + result.toString());
+				} else if (equipmentSession.getAttribute("IP") == null) {
 					equipmentSession.setAttribute("command", commad);
 					equipmentSession.setAttribute("IP", session.getRemoteAddress().toString());
 					byte[] commandInfo = getConamdInfo(info);
 					equipmentSession.write(commandInfo);
-
-					//					if (commad.equals(CommandTag.closeEquipment) || commad.equals(CommandTag.openEquipment)) {
-					//						equipmentSession.removeAttribute("IP");
-					//						result.put("state", "success");
-					//						result.put("IP", equipmentIp);
-					//						session.write(result.toString());
-					//					}
+					System.out.println("ClientCommandManager: send command to Equipment. command is "
+							+ DigitalUtils.getHexStringByBytes(commandInfo));
 				} else {
-					result.put("data", "设备正在被使用，请稍后");
-					result.put("state", "success");
+					result.put("data", "设备正在被使用，请稍后" + equipmentSession.getAttribute("command"));
+					result.put("state", "using");
 					result.put("IP", equipmentIp);
 					session.write(result.toString());
+					new Thread().sleep(2000);
+					equipmentSession.removeAttribute("IP");
+					System.out.println("ClientCommandManager: send result to client. resulr is " + result.toString());
 				}
 			} else {
+				result.put("state", "fail");
 				result.put("data", "设备未连接");
 				result.put("IP", equipmentIp);
 				session.write(result.toString());
+				System.out.println("ClientCommandManager: send result to client. resulr is " + result.toString());
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	private static IoSession getEquipmentSession(String ip) {
 		IoSession result = null;
-		int count = 0;
 		Collection<IoSession> sessionList = EquipmentServer.getClientSessions();
 		for (IoSession ioSession : sessionList) {
 			if (ioSession.getRemoteAddress().toString().indexOf(ip) > 0) {
-				count++;
 				result = ioSession;
 			}
-		}
-		if (count == 1) {
-			return result;
 		}
 		return result;
 	}
@@ -72,28 +75,26 @@ public class ClientCommandManager {
 		try {
 			String commad = info.getString("command");
 			switch (commad) {
-				case CommandTag.getEquipmentId:
-					result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA,
-						0x68, 0x13, 0x00, (byte) 0xDF, 0x16 };
-					break;
-				case CommandTag.openEquipment:
-					result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA,
-						(byte) 0xAA, (byte) 0xAA, 0x68, 0x1C, 0x10, 0x37, 0x44, 0x44, 0x44, 0x34, (byte) 0x89, 0x67, 0x45, 0x4D, 0x33, 0x47, 0x77, 0x3B, 0x3A, 0x44, 0x3C, (byte) 0x98, 0x16 };
-					break;
-				case CommandTag.closeEquipment:
-					result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA,
-						(byte) 0xAA, (byte) 0xAA, 0x68, 0x1C, 0x10, 0x37, 0x44, 0x44, 0x44, 0x34, (byte) 0x89, 0x67, 0x45, 0x4D, 0x33, 0x47, 0x77, 0x3B, 0x3A, 0x44, 0x3C, (byte) 0x97, 0x16 };
-					break;
-				case CommandTag.getCurrentVoltage:
-					result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA,
-						0x68, 0x13, 0x00, (byte) 0xDF, 0x16 };
-					break;
-				case CommandTag.getCurrentElectric:
-					result = new byte[] { (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, (byte) 0xFE, 0x68, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA, 0x68,
-						0x11, 0x04, 0x33, 0x34, 0x35, 0x35, (byte) 0xB2, 0x16 };
-					break;
-				default:
-					break;
+			case CommandTag.getEquipmentId:
+				result = DLT645_2007Utils.getEquipmentIdCommand();
+				break;
+			case CommandTag.openEquipment:
+				result = DLT645_2007Utils.openEquipmentCommand();
+				break;
+			case CommandTag.closeEquipment:
+				result = DLT645_2007Utils.closeEquipmentCommand();
+				break;
+			case CommandTag.getCurrentVoltage:
+				result = DLT645_2007Utils.getCurrentVoltageCommand();
+				break;
+			case CommandTag.getCurrentElectric:
+				result = DLT645_2007Utils.getCurrentElectricCommand();
+				break;
+			case CommandTag.getCurrentQuantity:
+				result = DLT645_2007Utils.getCurrentQuantityCommand();
+				break;
+			default:
+				break;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

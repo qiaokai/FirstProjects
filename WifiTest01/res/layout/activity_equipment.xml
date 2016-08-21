@@ -11,6 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="14dp"
+        android:gravity="center"
         android:padding="10dp"
         android:text="设备已关闭"
         android:textColor="@color/black"
@@ -123,7 +124,8 @@
         <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/lable_lastElectricQuantity"
@@ -171,7 +173,8 @@
         <TableRow
             android:id="@+id/tableRow7"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/lable_availableQuantity"
@@ -205,7 +208,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tableLayout1"
         android:layout_centerHorizontal="true"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp"
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/textView1"
@@ -231,7 +235,6 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:visibility="visible" />
-
     </RelativeLayout>
 
 </RelativeLayout>

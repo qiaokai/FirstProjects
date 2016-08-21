@@ -98,13 +98,12 @@ public class SocketUtils {
 			@Override
 			public void run() {
 				DatagramSocket socket = null;
-				boolean flag = true;
 				try {
 					if (socket == null) {
 						socket = new DatagramSocket(null);
 						socket.setReuseAddress(true);
 						socket.bind(new InetSocketAddress(clientPort));
-						socket.setSoTimeout(3000);
+						socket.setSoTimeout(2000);
 					}
 					InetAddress serverAddress = InetAddress.getByName(serverIp);//
 					DatagramPacket pack = new DatagramPacket(input, input.length, serverAddress, serverPort);//
@@ -126,13 +125,12 @@ public class SocketUtils {
 							message.what = MsgTag.success;
 							message.obj = temp;
 							handler.sendMessage(message);
-							flag = false;
 						}
 					}
 				} catch (Exception e) {
 				}
-				if (handler != null && flag) {
-					handler.sendEmptyMessage(MsgTag.fail);
+				if (handler != null) {
+					handler.sendEmptyMessage(MsgTag.timeOut);
 				}
 				socket.close();
 			}

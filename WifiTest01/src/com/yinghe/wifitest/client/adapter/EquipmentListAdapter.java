@@ -2,6 +2,11 @@ package com.yinghe.wifitest.client.adapter;
 
 import java.util.ArrayList;
 
+import com.example.wifitest01.R;
+import com.yinghe.wifitest.client.entity.EquipmentInfo;
+import com.yinghe.wifitest.client.entity.MsgTag;
+import com.yinghe.wifitest.client.manager.EquipmentManager;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Handler;
@@ -12,30 +17,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wifitest01.R;
-import com.yinghe.wifitest.client.entity.EquipmentList;
-import com.yinghe.wifitest.client.entity.MsgTag;
-import com.yinghe.wifitest.client.manager.EquipmentManager;
-import com.yinghe.wifitest.client.utils.EquipmentUtil;
-
 public class EquipmentListAdapter extends BaseAdapter {
 	private static final String TAG_IS_OPENED = "isOpen";
 	private static final String TAG_IS_CLOSED = "isClosed";
 	private static Activity mActivity;
 	private static ViewHolder holder;
+	ArrayList<EquipmentInfo> list;
 
-	public EquipmentListAdapter(Activity activity) {
+	public EquipmentListAdapter(Activity activity, ArrayList<EquipmentInfo> list) {
 		mActivity = activity;
+		this.list = list;
 	}
 
 	@Override
 	public int getCount() {
-		return EquipmentList.Instance().size();
+		return list.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return EquipmentList.Instance().get(position);
+		return list.get(position);
 	}
 
 	@Override
@@ -57,10 +58,12 @@ public class EquipmentListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		String equipmentId = EquipmentList.Instance().get(position).getId();
-		final String IP = EquipmentList.Instance().get(position).getIP();
-		if (equipmentId == null) {
-			showClosed(holder);
+		final String IP = list.get(position).getIP();
+		if (list.get(position).IsOpened()) {
+			showOpened(holder);
+			EquipmentManager.getEquipmentInfoByMina(IP, MsgTag.openEquipment, handler);
+		} else {
+			EquipmentManager.getEquipmentInfoByMina(IP, MsgTag.closeEquipment, handler);
 		}
 		final ImageView img_btn = (ImageView) convertView.findViewById(R.id.img_Equipment_ctrl);
 		img_btn.setOnClickListener(new View.OnClickListener() {
@@ -68,20 +71,13 @@ public class EquipmentListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (TAG_IS_OPENED.equals(img_btn.getTag())) {
-					EquipmentUtil.closeEquipment(IP, handler);
-					// if (EquipmentUtil.isClosed(IP, handler)) {
-					// showClosed(holder);
-					// }
+					EquipmentManager.getEquipmentInfoByMina(IP, MsgTag.closeEquipment, handler);
 				} else {
-					EquipmentUtil.openEquipment(IP, handler);
-					// if (EquipmentUtil.isOpened(IP, handler)) {
-					// showOpened(holder);
-					// }
+					EquipmentManager.getEquipmentInfoByMina(IP, MsgTag.openEquipment, handler);
 				}
 
 			}
 		});
-		// textView.setText(data.get(position));
 		return convertView;
 	}
 
@@ -106,21 +102,10 @@ public class EquipmentListAdapter extends BaseAdapter {
 	static Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case MsgTag.openEquipment:
-				EquipmentManager.upDateEquipmentList(msg);
+			if (msg.what == MsgTag.openEquipment && msg.arg1 == MsgTag.success) {
 				showOpened(holder);
-				break;
-			case MsgTag.closeEquipment:
-				System.out.println("closeEquipment");
+			} else if (msg.what == MsgTag.closeEquipment && msg.arg1 == MsgTag.success) {
 				showClosed(holder);
-				break;
-			case MsgTag.buildTCPConnect:
-				break;
-			case MsgTag.testTCPConnect:
-				break;
-			default:
-				break;
 			}
 		}
 	};

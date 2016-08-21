@@ -15,9 +15,7 @@ public class EquipmentHandler implements IoHandler {
 
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
-		System.out.println("session opened " + session.getRemoteAddress().toString());
-		// 拿到所有的客户端Session
-
+		System.out.println("Equipment session opened " + session.getRemoteAddress().toString());
 	}
 
 	@Override
@@ -32,6 +30,7 @@ public class EquipmentHandler implements IoHandler {
 
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
+		session.removeAttribute("IP");
 	}
 
 	@Override

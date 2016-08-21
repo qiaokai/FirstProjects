@@ -2,6 +2,8 @@ package com.yinghe.wifitest.client.entity;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+
 @SuppressWarnings("serial")
 public class EquipmentList extends ArrayList<EquipmentInfo> {
 
@@ -26,4 +28,14 @@ public class EquipmentList extends ArrayList<EquipmentInfo> {
 		}
 		return IpList;
 	}
+
+	@Override
+	public String toString() {
+		JSONArray result = new JSONArray();
+		for (EquipmentInfo equipmentInfo : Instance) {
+			result.put(equipmentInfo.toString());
+		}
+		return result.toString();
+	}
+
 }
