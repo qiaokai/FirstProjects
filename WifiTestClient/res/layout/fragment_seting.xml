@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <TextView
+        android:id="@+id/text_serverIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="服务器IP:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edit_serverIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_serverIp"
+        android:layout_alignTop="@+id/text_serverIp"
+        android:layout_toLeftOf="@+id/button_saveServerIp"
+        android:layout_toRightOf="@+id/text_serverIp"
+        android:ems="10"
+        android:inputType="textPersonName" >
+    </EditText>
+
+    <Button
+        android:id="@+id/button_saveServerIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edit_serverIp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/edit_serverIp"
+        android:text="保存" />
+
+</RelativeLayout>

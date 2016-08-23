@@ -18,6 +18,7 @@ import com.example.wifitest01.R.color;
 import com.yinghe.wifitest.client.adapter.ViewPagerAdapter;
 import com.yinghe.wifitest.client.entity.MsgTag;
 import com.yinghe.wifitest.client.view.PageConnectView;
+import com.yinghe.wifitest.client.view.UserSettingView;
 
 public class MainFragmentActivity extends Activity implements View.OnClickListener {
 
@@ -49,10 +50,10 @@ public class MainFragmentActivity extends Activity implements View.OnClickListen
 
 		connectView = getLayoutInflater().inflate(R.layout.fragment_connect, null);
 		findView = getLayoutInflater().inflate(R.layout.activity_main2, null);
-		userView = getLayoutInflater().inflate(R.layout.activity_main3, null);
+		userView = getLayoutInflater().inflate(R.layout.fragment_seting, null);
 
 		PageConnectView.init(connectView, this);
-
+		UserSettingView.init(connectView, this);
 		initViewPage();
 		initTitle();
 
