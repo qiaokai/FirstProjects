@@ -1,14 +1,5 @@
 package com.yinghe.wifitest.client.view;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import com.example.wifitest01.R;
-import com.yinghe.wifitest.client.callback.YHLog;
-import com.yinghe.wifitest.client.entity.ConstantEntity;
-import com.yinghe.wifitest.client.entity.EquipmentInfo;
-import com.yinghe.wifitest.client.entity.EquipmentList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,6 +8,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.wifitest01.R;
+import com.yinghe.wifitest.client.entity.ConstantEntity;
 
 public class UserSettingView {
 	private static Activity mActivity;
@@ -30,8 +25,10 @@ public class UserSettingView {
 		save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!TextUtils.isEmpty(serverIp.getText())) {
+				if (!TextUtils.isEmpty(serverIp.getText().toString())) {
 					saveServerIp(serverIp.getText().toString());
+					ConstantEntity.serverIp = serverIp.getText().toString();
+					Toast.makeText(mActivity, "保存成功", Toast.LENGTH_LONG).show();
 				}
 			}
 		});

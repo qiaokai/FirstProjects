@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="55dp"
         android:gravity="center_horizontal"
         android:padding="5dp"
         android:text="服务器IP:"
@@ -24,8 +24,8 @@
         android:layout_alignTop="@+id/text_serverIp"
         android:layout_toLeftOf="@+id/button_saveServerIp"
         android:layout_toRightOf="@+id/text_serverIp"
-        android:ems="10"
-        android:inputType="textPersonName" >
+        android:inputType="textPersonName"
+        android:hint="192.168.1.111" >
     </EditText>
 
     <Button

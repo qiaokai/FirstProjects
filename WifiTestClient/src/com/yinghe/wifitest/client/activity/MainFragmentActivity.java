@@ -53,7 +53,7 @@ public class MainFragmentActivity extends Activity implements View.OnClickListen
 		userView = getLayoutInflater().inflate(R.layout.fragment_seting, null);
 
 		PageConnectView.init(connectView, this);
-		UserSettingView.init(connectView, this);
+		UserSettingView.init(userView, this);
 		initViewPage();
 		initTitle();
 
